@@ -97,6 +97,14 @@ Other changes:
 - The proposal label now reads: "Simulated proposal with deliberately chosen strengths and errors. Drafted with AI assistance and reviewed by the project group." README and REPORT_DRAFTS were corrected to match.
 - Interface font: Aptos with system fallbacks. Georgia is used only for the proposal.
 
+**IT stakeholders and activity B (group review, content version 1.3.0).**
+
+- **Two IT stakeholders.** The case now has an "IT service owner (head of IT operations)", who must approve the integration and can block the launch. Separately, "IT operations staff" have limited capacity and are not following the pilot. The planning note now says the IT service owner has not confirmed availability.
+- **Wording updated to match.** Tasks 2, 3, 5 and 6, the hints, the feedback, the case file and the briefing were updated.
+- **Proposal claim unchanged.** The claim "IT has limited interest in the pilot…" keeps its vague wording on purpose. Task 3's feedback now says that the IT service owner has critical influence even if interest is small.
+- **Activity B renamed** "Prepare and deliver staff training", with the same duration and dependencies. Diagram nodes now grow to fit three-line names.
+- **To review on the site:** the rewritten Task 3 and Task 5 options and feedback.
+
 **Second case.** The content model and navigation support more cases. Each case is a folder such as `src/content/coursehub/` that exports one `CaseStudy` and is listed in `src/content/cases.ts`. Links take the form `#/case/<id>/…`, and saved progress is stored per case. Only CourseHub is built.
 
 ## Other notes

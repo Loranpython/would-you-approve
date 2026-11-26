@@ -97,14 +97,14 @@ export const CASE_SECTIONS: CaseSection[] = [
       },
       {
         id: 's-it-approval',
-        label: 'IT service owner',
+        label: 'IT service owner (head of IT operations)',
         text: 'Must approve the integration and can block the launch.',
         verification: 'derived-from-brief',
       },
       {
         id: 's-it-capacity',
-        label: 'IT',
-        text: 'Has limited capacity and competing operational priorities. IT did not ask for the pilot and is not actively following it.',
+        label: 'IT operations staff',
+        text: 'Have limited capacity and competing operational priorities. They did not ask for the pilot and are not actively following it.',
         verification: 'derived-from-brief',
       },
       {
@@ -133,8 +133,8 @@ export const CASE_SECTIONS: CaseSection[] = [
     facts: [
       {
         id: 'p-it-availability',
-        label: 'IT staff for configuration',
-        text: '“The project manager expects availability, but IT has not yet confirmed it.”',
+        label: 'IT operations staff for configuration',
+        text: '“The project manager expects availability, but the IT service owner has not yet confirmed it.”',
         verification: 'derived-from-brief',
       },
     ],
@@ -156,7 +156,7 @@ export const CASE_SCHEDULE: CaseSchedule = {
   ],
   network: [
     { id: 'A', name: 'Define requirements', duration: 2, predecessors: [] },
-    { id: 'B', name: 'Prepare training materials', duration: 3, predecessors: ['A'] },
+    { id: 'B', name: 'Prepare and deliver staff training', duration: 3, predecessors: ['A'] },
     { id: 'C', name: 'Configure platform', duration: 4, predecessors: ['A'] },
     { id: 'D', name: 'Conduct pilot testing', duration: 2, predecessors: ['B', 'C'] },
     { id: 'E', name: 'Prepare and complete launch', duration: 3, predecessors: ['D'] },

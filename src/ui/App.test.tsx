@@ -227,7 +227,7 @@ describe('user journey', () => {
     await user.click(screen.getByRole('button', { name: 'Submit and see feedback' }));
     const model = screen.getByText((_, el) => el?.tagName === 'P' && /^Model answer: An assumption/.test(el.textContent ?? ''));
     expect(model.textContent).not.toMatch(/\bYes\b/);
-    expect(model).toHaveTextContent('The project manager expects it, but IT has not confirmed it.');
+    expect(model).toHaveTextContent('The project manager expects it, but the IT service owner has not confirmed it.');
   }, 20_000);
 
   it('blocks each stage until it is complete, and says what is missing', async () => {
@@ -287,7 +287,10 @@ describe('user journey', () => {
     const panel = screen.getByRole('complementary', { name: 'Case file' });
     expect(within(panel).queryByRole('img')).toBeNull();
     expect(within(panel).getByRole('table')).toBeInTheDocument();
-    expect(within(main()).getByRole('img', { name: /Activity network/ })).toBeInTheDocument();
+    const diagram = within(main()).getByRole('img', { name: /Activity network/ });
+    // Every word of every activity name is drawn, so long names are wrapped, not cut off.
+    const drawn = diagram.textContent!.replace(/\s+/g, ' ');
+    for (const a of C.schedule!.network) for (const w of a.name.split(' ')) expect(drawn, a.name).toContain(w);
     // No calculated values anywhere before submission.
     expect(within(panel).queryByRole('columnheader', { name: 'Float' })).toBeNull();
     expect(document.body.textContent).not.toMatch(/CRITICAL/);

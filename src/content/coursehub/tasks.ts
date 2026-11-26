@@ -213,13 +213,13 @@ export const TASKS: ReviewTask[] = [
           },
           {
             id: 'x-collaboration',
-            text: 'Teaching staff, IT and student representatives collaborated effectively during delivery.',
+            text: 'Teaching staff, IT operations staff and student representatives collaborated effectively during delivery.',
             correct: 'process',
             explanation: 'Was the work carried out well? Collaboration and communication during the project.',
           },
           {
             id: 'x-overload',
-            text: "Delivering the pilot did not overload IT's day-to-day operations.",
+            text: 'Delivering the pilot did not overload the day-to-day work of IT operations.',
             correct: 'process',
             explanation: 'Workload and disruption caused by the work itself belong to process success.',
           },
@@ -246,7 +246,7 @@ export const TASKS: ReviewTask[] = [
           'Turn one of the proposal’s three items into a success criterion. Say what would be judged, how it would be measured, who would assess it and when.',
         placeholder: 'Criterion: … Measured by … Assessed by … When: …',
         modelAnswer:
-          'Example: “Teaching staff, IT and student representatives judge that collaboration during delivery was effective (process success). Measured by a short survey and a review of the decision log; assessed by the project manager with the faculty sponsor; at handover.” The practice itself (“regular communication”) stays in the plan as a success factor.',
+          'Example: “Teaching staff, IT operations staff and student representatives judge that collaboration during delivery was effective (process success). Measured by a short survey and a review of the decision log; assessed by the project manager with the faculty sponsor; at handover.” The practice itself (“regular communication”) stays in the plan as a success factor.',
         checklist: [
           { id: 'c-judged', text: 'Describes something that will be judged, not something the team will do.' },
           { id: 'c-how', text: 'Says how it will be measured or what evidence will be used.' },
@@ -282,7 +282,7 @@ export const TASKS: ReviewTask[] = [
       betterProposal:
         '“Success factors: early stakeholder involvement, clear responsibilities and regular communication, each linked to concrete actions in the plan. Success criteria: delivered within NOK 400,000 before the teaching period (project management success, assessed at handover); stakeholders judge collaboration during delivery to have been effective (process success, assessed at handover); students and staff actively use CourseHub (project success, assessed after launch, with a measure, target and date agreed with the sponsor).”',
       more: [
-        'Collaboration can appear on both sides, and that is not a trick. “Hold regular check-ins with IT” is a success factor: a practice the team commits to. “IT and teaching staff judge that collaboration during delivery was effective” is a process-success criterion: a judgement made afterwards. The question is whether you are describing what you will do, or how you will judge what happened.',
+        'Collaboration can appear on both sides, and that is not a trick. “Hold regular check-ins with IT operations” is a success factor: a practice the team commits to. “IT operations staff and teaching staff judge that collaboration during delivery was effective” is a process-success criterion: a judgement made afterwards. The question is whether you are describing what you will do, or how you will judge what happened.',
         'The criteria in the matching exercise are still broad. “Students and staff use the platform” needs an agreed measure (for example active use or course coverage), a target and an assessment date before anyone can say whether it was met. The lecturer’s own example for a digital learning platform assesses adoption one semester after launch, not at handover (PDF p. 47, slide 110).',
       ],
       verification: 'verified-against-handout',
@@ -301,23 +301,23 @@ export const TASKS: ReviewTask[] = [
     judgementFeedback: {
       approve: {
         fit: 'differs',
-        text: 'The claim reads IT’s low interest correctly, but it ignores IT’s influence on the project.',
+        text: 'The claim may read IT’s low interest correctly, but it ignores the IT service owner’s influence on the project.',
       },
       revise: {
         fit: 'expected',
-        text: 'IT’s interest may be small, but its influence is critical.',
+        text: 'Interest in IT may be small, but the IT service owner’s influence is critical.',
       },
       'more-info': {
         fit: 'differs',
-        text: 'The case already tells you what matters most: IT must approve the integration and can block the launch.',
+        text: 'The case already tells you what matters most: the IT service owner must approve the integration and can block the launch.',
       },
     },
     initialReasoning: {
       modelAnswer:
-        'IT shows little interest, but the IT service owner must approve the integration and can block the launch, so IT’s influence is critical. Only monitoring IT and contacting it shortly before launch is too little, too late.',
+        'IT may show little interest, but the IT service owner must approve the integration and can block the launch, so their influence is critical. Only monitoring IT and contacting it shortly before launch is too little, too late.',
       checklist: [
-        { id: 'c-approval', text: 'Mentions IT’s approval role or its ability to block the launch.' },
-        { id: 'c-influence', text: 'Separates IT’s small interest from its critical influence.' },
+        { id: 'c-approval', text: 'Mentions the IT service owner’s approval role or ability to block the launch.' },
+        { id: 'c-influence', text: 'Separates small interest from the IT service owner’s critical influence.' },
       ],
       verification: 'needs-review',
     },
@@ -326,38 +326,38 @@ export const TASKS: ReviewTask[] = [
         kind: 'multi',
         id: 'evidence',
         label: 'Relevant evidence',
-        prompt: 'Which case evidence matters most when deciding how to engage IT? Select all that apply.',
+        prompt: 'Which case evidence matters most when deciding how to engage IT (the IT service owner and IT operations staff)? Select all that apply.',
         shuffle: true,
         options: [
           {
             id: 'ev-approval',
             text: 'The IT service owner must approve the integration and can block the launch.',
             fit: 'expected',
-            feedback: 'This makes IT’s influence critical.',
+            feedback: 'This makes the IT service owner’s influence critical.',
           },
           {
             id: 'ev-capacity',
-            text: 'IT has limited capacity and competing operational priorities.',
+            text: 'IT operations staff have limited capacity and competing operational priorities.',
             fit: 'expected',
-            feedback: 'This affects how and when you can get IT’s time, and how supportive IT is likely to be.',
+            feedback: 'This affects how and when the project can get IT operations time, and how supportive IT is likely to be.',
           },
           {
             id: 'ev-not-following',
-            text: 'IT did not ask for the pilot and is not actively following it.',
+            text: 'IT operations staff did not ask for the pilot and are not actively following it.',
             fit: 'expected',
-            feedback: 'This is the evidence for small interest. It does not tell you anything about influence.',
+            feedback: 'This is the evidence for small interest. It says nothing about the IT service owner’s influence.',
           },
           {
             id: 'ev-availability',
-            text: 'IT has not yet confirmed that staff will be available during configuration.',
+            text: 'The IT service owner has not confirmed staff availability for configuration.',
             fit: 'expected',
-            feedback: 'The project depends on IT resources that are not yet secured.',
+            feedback: 'The project depends on IT operations staff whose time is not yet secured.',
           },
           {
             id: 'ev-budget',
             text: 'The faculty sponsor authorises funding, and the approved budget is NOK 400,000.',
             fit: 'differs',
-            feedback: 'Relevant to the project, but it says nothing about IT’s influence or interest.',
+            feedback: 'Relevant to the project, but it says nothing about the influence or interest of IT.',
           },
           {
             id: 'ev-students',
@@ -378,32 +378,32 @@ export const TASKS: ReviewTask[] = [
         kind: 'single',
         id: 'strategy',
         label: 'Engagement approach',
-        prompt: 'Given this evidence, which engagement approach fits IT best?',
+        prompt: 'Given this evidence, which engagement approach fits the IT service owner best?',
         options: [
           {
             id: 'g1',
             text: 'G1 Collaborate: critical influence, large interest',
             fit: 'acceptable',
             feedback:
-              'Defensible. Closer involvement than the minimum can make sense, because IT staff do part of the configuration work. Keep IT’s limited capacity in mind when you ask for its time.',
+              'Defensible. Closer involvement than the minimum can make sense, because IT operations staff do part of the configuration work. Keep their limited capacity in mind when you ask for their time.',
           },
           {
             id: 'g2',
             text: 'G2 Satisfy: critical influence, small interest',
             fit: 'expected',
-            feedback: 'Fits the evidence: IT can block the launch (critical influence) but is not following the pilot (small interest).',
+            feedback: 'Fits the evidence: the IT service owner can block the launch (critical influence), while IT is not following the pilot (small interest).',
           },
           {
             id: 'g3',
             text: 'G3 Inform: marginal influence, large interest',
             fit: 'differs',
-            feedback: 'Inform suits stakeholders with large interest but marginal influence. IT is the opposite: small interest, critical influence.',
+            feedback: 'Inform suits stakeholders with large interest but marginal influence. The IT service owner is the opposite: small interest, critical influence.',
           },
           {
             id: 'g4',
             text: 'G4 Monitor: marginal influence, small interest',
             fit: 'differs',
-            feedback: 'This is the position the proposal takes. It underestimates IT’s influence: IT can block the launch.',
+            feedback: 'This is the position the proposal takes. It underestimates the IT service owner’s influence: they can block the launch.',
           },
         ],
         verification: 'verified-against-handout',
@@ -415,19 +415,19 @@ export const TASKS: ReviewTask[] = [
         prompt: 'What practical action would you take with IT now, and why?',
         placeholder: 'I would … because …',
         modelAnswer:
-          'Meet the IT service owner early, before configuration starts, to agree what the integration approval requires and when it can be given, and to confirm and reserve the IT staff time needed for configuration. Agree a named contact and short check-ins at agreed points, so that the launch does not depend on a last-minute IT decision.',
+          'Meet the IT service owner early, before configuration starts, to agree what the integration approval requires and when it can be given, and to confirm and reserve the IT operations staff time needed for configuration. Agree a named contact and short check-ins at agreed points, so that the launch does not depend on a last-minute IT decision.',
         checklist: [
-          { id: 'c-approval', text: 'Refers to IT’s approval role or its ability to block the launch.' },
+          { id: 'c-approval', text: 'Refers to the IT service owner’s approval role or ability to block the launch.' },
           { id: 'c-early', text: 'Proposes contacting IT early, well before launch.' },
           { id: 'c-concrete', text: 'Includes a concrete action, such as agreeing approval requirements or reserving capacity.' },
-          { id: 'c-capacity', text: 'Takes IT’s limited capacity and competing priorities into account.' },
+          { id: 'c-capacity', text: 'Takes the limited capacity and competing priorities of IT operations staff into account.' },
         ],
         verification: 'needs-review',
       },
     ],
     hints: [
       {
-        text: 'The proposal judges IT by its interest. What does the case say IT can do to the project?',
+        text: 'The proposal judges “IT” as one group, by its interest. Who in IT appears in the case, and what can each of them do to the project?',
         verification: 'needs-review',
       },
       {
@@ -437,16 +437,16 @@ export const TASKS: ReviewTask[] = [
     ],
     feedback: {
       summary:
-        'The proposal is right that IT shows little interest, but it treats IT as if its influence were also marginal. That places IT in G4 (Monitor). Small interest does not mean marginal influence.',
+        'The proposal is right that IT shows little interest, but it treats “IT” as one group whose influence is also marginal, which places it in G4 (Monitor). The case separates the IT service owner, who has critical influence even if interest is small, from IT operations staff, who have limited capacity. Small interest does not mean marginal influence.',
       evidence:
-        'Given the information in this case, the IT service owner must approve the integration and can block the launch, and configuration needs IT staff whose availability is not confirmed. That makes IT’s influence critical. IT did not ask for the pilot, is not following it and has competing priorities, so its interest is small.',
+        'Given the information in this case, the IT service owner (head of IT operations) must approve the integration and can block the launch, so their influence is critical even if their interest is small. IT operations staff have limited capacity and competing priorities, did not ask for the pilot and are not following it, and the IT service owner has not yet confirmed their availability for configuration.',
       concept:
-        'The lecturer classifies stakeholders by influence (critical or marginal) and interest (small or large) into four groups, with the strategies G1 Collaborate, G2 Satisfy, G3 Inform and G4 Monitor. Influence is about how much the project needs a stakeholder, for example for approvals or resources. Critical influence with small interest is G2, so Satisfy is the natural starting point. G1 Collaborate is also defensible if you want IT closely involved in configuration.',
+        'The lecturer classifies stakeholders by influence (critical or marginal) and interest (small or large) into four groups, with the strategies G1 Collaborate, G2 Satisfy, G3 Inform and G4 Monitor. Influence is about how much the project needs a stakeholder, for example for approvals or resources. Critical influence with small interest is G2, so Satisfy is the natural starting point for the IT service owner. G1 Collaborate is also defensible if you want IT closely involved in configuration.',
       conceptSources: ['stakeholder-mapping', 'stakeholder-classification', 'stakeholder-strategies'],
       betterProposal:
-        '“IT shows little interest in the pilot but has critical influence: the IT service owner must approve the integration and can block the launch. We will treat IT as G2 (Satisfy): agree the approval requirements and reserve configuration capacity before configuration starts, and keep IT briefly updated at agreed checkpoints.”',
+        '“IT shows little interest in the pilot, but the IT service owner has critical influence: they must approve the integration and can block the launch. We will treat the IT service owner as G2 (Satisfy): agree the approval requirements early, reserve configuration capacity with IT operations before configuration starts, and keep IT briefly updated at agreed checkpoints.”',
       more: [
-        'The support–sabotage scale adds another angle. Nothing suggests that IT opposes the pilot, but with competing priorities its support may be closer to neutrality or “go slowly” than to full support.',
+        'The support–sabotage scale adds another angle. Nothing suggests that IT opposes the pilot, but with competing priorities in IT operations its support may be closer to neutrality or “go slowly” than to full support.',
         'On the lecturer’s support × influence grid, a critical stakeholder who is supportive is involved as a key stakeholder, while one who is not supportive calls for reducing dependency. Both point the same way here: agree approval requirements and capacity early, and avoid a plan that relies on a quick IT decision just before launch (PDF p. 27, slide 56; PDF p. 28, slide 57).',
         'Formal authority is only one source of influence. Teaching staff have no approval role, but adoption depends on them, which also gives them influence over whether the pilot creates value.',
       ],
@@ -545,7 +545,7 @@ export const TASKS: ReviewTask[] = [
         'The critical path is the longest path through the network, and it determines the shortest possible project duration. In the forward pass, EF = ES + duration, and at a merge point the largest EF of the predecessors becomes the successor’s ES. In the backward pass, LS = LF − duration, and at a burst point the smallest LS of the successors becomes the predecessor’s LF. Float (also called slack) = LS − ES = LF − EF.',
       conceptSources: ['critical-path', 'pass-rules', 'float'],
       betterProposal:
-        '“Training (B) matters for adoption, but in the current plan B has {float:baseline:B|days} of float; the critical path is {paths:baseline}. Because B’s float is the schedule’s only margin on that branch, we will still monitor B closely.”',
+        '“Staff training (B) matters for adoption, but in the current plan B has {float:baseline:B|days} of float; the critical path is {paths:baseline}. Because B’s float is the schedule’s only margin on that branch, we will still monitor B closely.”',
       more: [
         'What happens after a one-day increase: with B at 4 days, the project still takes {duration:bPlus1} working days, but B’s float drops to {float:bPlus1:B} and there are two critical paths: {paths:bPlus1}. The end date is unchanged, but the schedule has lost its margin. A further delay in either B or C would now move the launch.'
       ],
@@ -574,14 +574,14 @@ export const TASKS: ReviewTask[] = [
       },
       'more-info': {
         fit: 'partly',
-        text: 'Getting IT’s confirmation is exactly what is missing. But the claim already says something the case contradicts, so the proposal needs revising now, not only more information.',
+        text: 'Getting the IT service owner’s confirmation is exactly what is missing. But the claim already says something the case contradicts, so the proposal needs revising now, not only more information.',
       },
     },
     initialReasoning: {
       modelAnswer:
-        'The case says IT has not yet confirmed that staff will be available, but the proposal presents this as a confirmed fact. It is an assumption, and treating it as a fact hides a risk to configuration and the launch.',
+        'The case says the IT service owner has not yet confirmed that IT operations staff will be available, but the proposal presents this as a confirmed fact. It is an assumption, and treating it as a fact hides a risk to configuration and the launch.',
       checklist: [
-        { id: 'c-contradicts', text: 'Points out that the case contradicts the claim: IT has not confirmed.' },
+        { id: 'c-contradicts', text: 'Points out that the case contradicts the claim: availability has not been confirmed.' },
         { id: 'c-assumption', text: 'Calls availability an assumption, or names the risk it hides.' },
       ],
       verification: 'needs-review',
@@ -591,26 +591,26 @@ export const TASKS: ReviewTask[] = [
         kind: 'single',
         id: 'statement-type',
         label: 'Type of statement',
-        prompt: 'Given the case, what is “IT staff will be available during configuration”?',
+        prompt: 'Given the case, what is “IT operations staff will be available during configuration”?',
         shuffle: true,
         options: [
           {
             id: 'assumption',
             text: 'An assumption: relied on by the plan but not yet confirmed',
             fit: 'expected',
-            feedback: 'Yes. The project manager expects it, but IT has not confirmed it.',
+            feedback: 'Yes. The project manager expects it, but the IT service owner has not confirmed it.',
           },
           {
             id: 'fact',
-            text: 'A confirmed fact: IT has agreed to provide the staff it needs',
+            text: 'A confirmed fact: the IT service owner has agreed to provide the staff',
             fit: 'differs',
-            feedback: 'This is what the proposal says, but the planning note states that IT has not yet confirmed it.',
+            feedback: 'This is what the proposal says, but the planning note states that the IT service owner has not yet confirmed it.',
           },
           {
             id: 'risk',
             text: 'A risk: an uncertain event that could affect the project',
             fit: 'differs',
-            feedback: 'Close, but the risk is the opposite event: that IT staff may not be available when they are needed.',
+            feedback: 'Close, but the risk is the opposite event: that IT operations staff may not be available when they are needed.',
           },
           {
             id: 'constraint',
@@ -630,25 +630,25 @@ export const TASKS: ReviewTask[] = [
         options: [
           {
             id: 'risk-capacity',
-            text: 'IT staff may be unavailable when configuration starts, which could delay configuration and the launch.',
+            text: 'IT operations staff may be unavailable when configuration starts, delaying configuration and the launch.',
             fit: 'expected',
             feedback: 'Yes: an uncertain event with a consequence for the project’s objectives.',
           },
           {
             id: 'risk-interest',
-            text: 'IT is not following the pilot, so it may be unaware of the project’s plans and progress.',
+            text: 'IT operations staff are not following the pilot, so they may be unaware of the project’s plans and progress.',
             fit: 'differs',
             feedback: 'This describes IT’s attitude and a mild consequence. It is not the risk that follows from the availability assumption.',
           },
           {
             id: 'risk-budget',
-            text: 'Configuration may cost more than planned, so the project could exceed its approved NOK 400,000 budget.',
+            text: 'Configuration may cost more than planned, so the project could exceed its approved budget of NOK 400,000.',
             fit: 'differs',
             feedback: 'A possible risk, but it does not follow from the assumption about IT availability.',
           },
           {
             id: 'risk-restated',
-            text: 'The project manager expects IT staff to be available, so configuration can start on time.',
+            text: 'The project manager expects IT operations staff to be available, so configuration can start on time.',
             fit: 'differs',
             feedback: 'This restates the assumption and its intended result. It does not describe what could go wrong.',
           },
@@ -664,13 +664,13 @@ export const TASKS: ReviewTask[] = [
         options: [
           {
             id: 'resp-confirm',
-            text: 'Ask IT to confirm and reserve the required capacity before configuration starts.',
+            text: 'Ask the IT service owner to confirm and reserve the required staff capacity before configuration starts.',
             fit: 'expected',
             feedback: 'A reduction response: it lowers the probability that the risk occurs.',
           },
           {
             id: 'resp-owner',
-            text: 'Give the risk an owner and a date by which IT must confirm.',
+            text: 'Give the risk an owner and a date by which the IT service owner must confirm.',
             fit: 'expected',
             feedback: 'Ownership and response timing are what make a response happen.',
           },
@@ -682,19 +682,19 @@ export const TASKS: ReviewTask[] = [
           },
           {
             id: 'resp-register-only',
-            text: 'Record IT availability in the risk register, and close the item once it is recorded.',
+            text: 'Record staff availability in the risk register, and close the item once it is recorded.',
             fit: 'differs',
             feedback: 'Recording a risk does not reduce it. It needs a response, an owner, timing and follow-up.',
           },
           {
             id: 'resp-pm-scope',
-            text: 'If IT is unavailable, let the project manager reduce the pilot scope without approval.',
+            text: 'If IT staff are unavailable, let the project manager reduce the pilot scope without approval.',
             fit: 'differs',
             feedback: 'Reducing scope can be a valid fallback, but the faculty sponsor approves major scope changes.',
           },
           {
             id: 'resp-keep-claim',
-            text: 'Keep the statement that IT has confirmed, so that the faculty sponsor stays confident in the plan.',
+            text: 'Keep the statement that IT has confirmed, so that the faculty sponsor stays confident in the plan for now.',
             fit: 'differs',
             feedback: 'This hides the risk from the people who need to manage it.',
           },
@@ -708,7 +708,7 @@ export const TASKS: ReviewTask[] = [
         prompt: 'Rewrite the proposal’s statement so that it is accurate and useful.',
         placeholder: 'We assume that …',
         modelAnswer:
-          '“We assume that IT staff will be available during configuration; IT has not yet confirmed this. The project manager will ask IT to confirm and reserve the capacity by an agreed date before configuration starts. If it is not confirmed by then, we will use the agreed contingency plan, for example limited external support within the budget or, with the faculty sponsor’s approval, a smaller pilot scope.”',
+          '“We assume that IT operations staff will be available during configuration; the IT service owner has not yet confirmed this. The project manager will ask the IT service owner to confirm and reserve the capacity by an agreed date before configuration starts. If it is not confirmed by then, we will use the agreed contingency plan, for example limited external support within the budget or, with the faculty sponsor’s approval, a smaller pilot scope.”',
         checklist: [
           { id: 'c-assumption', text: 'States availability as an assumption, not a fact.' },
           { id: 'c-reduce', text: 'Says what will be done to reduce the risk, such as confirming and reserving capacity.' },
@@ -724,7 +724,7 @@ export const TASKS: ReviewTask[] = [
         verification: 'needs-review',
       },
       {
-        text: 'A risk is something that may happen and would affect the project’s objectives. What would happen to configuration if IT staff were not available?',
+        text: 'A risk is something that may happen and would affect the project’s objectives. What would happen to configuration if IT operations staff were not available?',
         verification: 'needs-review',
       },
     ],
@@ -732,12 +732,12 @@ export const TASKS: ReviewTask[] = [
       summary:
         'The proposal presents an unverified assumption as a confirmed fact. That hides a real risk from the people who need to manage it.',
       evidence:
-        'Given the information in this case, the planning note says: “The project manager expects availability, but IT has not yet confirmed it.” IT also has limited capacity and competing priorities, which makes the assumption fragile. Configuration depends on IT staff.',
+        'Given the information in this case, the planning note says: “The project manager expects availability, but the IT service owner has not yet confirmed it.” IT operations staff also have limited capacity and competing priorities, which makes the assumption fragile. Configuration depends on IT operations staff.',
       concept:
         'The risk lecture asks you to select and justify a response (acceptance, reduction, sharing, transfer or avoidance) and to keep a risk register with clear ownership, response timing and current status. Here the main response is reduction: confirm and reserve capacity early. A contingency plan prepares for the case where the risk happens anyway. The lecturer also notes that responses should be escalated when they exceed the project’s authority, and in this case the faculty sponsor approves major scope changes.',
       conceptSources: ['risk-objectives', 'threat-responses', 'contingency-plans', 'risk-register'],
       betterProposal:
-        '“We assume IT staff will be available during configuration, but IT has not yet confirmed this. The project manager will obtain confirmation and reserve capacity by an agreed date before configuration starts. If capacity is not confirmed, we will use the agreed contingency plan; any reduction in scope will go to the faculty sponsor for approval.”',
+        '“We assume IT operations staff will be available during configuration, but the IT service owner has not yet confirmed this. The project manager will obtain confirmation and reserve capacity by an agreed date before configuration starts. If capacity is not confirmed, we will use the agreed contingency plan; any reduction in scope will go to the faculty sponsor for approval.”',
       more: [
         'Possible contingency options, each with a trade-off: buy limited external support within the NOK 400,000 budget; reduce the pilot scope, which needs the sponsor’s approval; or re-plan the work. Be careful with re-planning: in the baseline, configuration (C) has {float:baseline:C|days} of float, so any slip in configuration moves the launch unless the IT-dependent work can be rearranged within configuration itself.',
         'Writing the risk in the register does not reduce it. The register is useful because it records who owns the response, when it will happen and its current status, and because those entries are followed up.',
@@ -813,13 +813,13 @@ export const TASKS: ReviewTask[] = [
           },
           {
             id: 'f-duration',
-            text: 'Preparing training materials (activity B) is planned to take three working days in total.',
+            text: 'Preparing and delivering staff training (activity B) is planned to take three working days.',
             fit: 'differs',
             feedback: 'A planning detail; it does not bear on whether to evaluate before rollout.',
           },
           {
             id: 'f-it-interest',
-            text: 'IT has limited capacity and is not actively following the pilot.',
+            text: 'IT operations staff have limited capacity and are not following the pilot.',
             fit: 'differs',
             feedback: 'Relevant to engagement, but not a reason for evaluating before rollout.',
           },

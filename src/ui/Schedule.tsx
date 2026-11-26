@@ -41,7 +41,7 @@ function wrap(text: string, max = 16): string[] {
     } else line = line ? `${line} ${word}` : word;
   }
   if (line) lines.push(line);
-  return lines.slice(0, 2);
+  return lines.slice(0, 3);
 }
 
 /**
@@ -51,7 +51,9 @@ function wrap(text: string, max = 16): string[] {
  */
 export function NetworkDiagram({ result, showResults, title }: { result: ScheduleResult; showResults: boolean; title: string }) {
   const uid = useId();
-  const nodeH = showResults ? 156 : 126;
+  // Node height follows the longest name (two or three lines), so no name is cut off.
+  const nameLines = Math.max(2, ...result.activities.map((a) => wrap(a.name).length));
+  const nodeH = (showResults ? 104 : 80) + nameLines * NAME_LINE;
   const { pos, width, height } = layout(result, nodeH);
   const isCritEdge = (from: string, to: string) =>
     showResults && result.byId[from].critical && result.byId[to].critical && result.byId[from].ef === result.byId[to].es;

@@ -12,7 +12,7 @@ export const TRANSFER: TransferChallenge = {
       id: 'A',
       title: 'Part A: A changed schedule',
       situation:
-        'Activity B (prepare training materials) now takes 5 working days instead of 3. All other durations and dependencies stay the same.',
+        'Activity B (prepare and deliver staff training) now takes 5 working days instead of 3. All other durations and dependencies stay the same.',
       scenario: 'bPlus2',
       parts: [
         {
