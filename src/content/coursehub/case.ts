@@ -98,13 +98,13 @@ export const CASE_SECTIONS: CaseSection[] = [
       {
         id: 's-it-approval',
         label: 'IT service owner (head of IT operations)',
-        text: 'Must approve the integration and can block the launch.',
+        text: 'Must approve the integration and can block the launch. Did not ask for the pilot and is not actively following it.',
         verification: 'derived-from-brief',
       },
       {
         id: 's-it-capacity',
         label: 'IT operations staff',
-        text: 'Have limited capacity and competing operational priorities. They did not ask for the pilot and are not actively following it.',
+        text: 'Limited capacity and competing operational priorities.',
         verification: 'derived-from-brief',
       },
       {

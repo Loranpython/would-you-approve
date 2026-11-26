@@ -301,11 +301,11 @@ export const TASKS: ReviewTask[] = [
     judgementFeedback: {
       approve: {
         fit: 'differs',
-        text: 'The claim may read IT’s low interest correctly, but it ignores the IT service owner’s influence on the project.',
+        text: 'The claim reads the IT service owner’s low interest correctly, but it ignores their influence on the project.',
       },
       revise: {
         fit: 'expected',
-        text: 'Interest in IT may be small, but the IT service owner’s influence is critical.',
+        text: 'The IT service owner’s interest may be small, but their influence is critical.',
       },
       'more-info': {
         fit: 'differs',
@@ -314,10 +314,10 @@ export const TASKS: ReviewTask[] = [
     },
     initialReasoning: {
       modelAnswer:
-        'IT may show little interest, but the IT service owner must approve the integration and can block the launch, so their influence is critical. Only monitoring IT and contacting it shortly before launch is too little, too late.',
+        'The IT service owner shows little interest in the pilot, but must approve the integration and can block the launch, so their influence is critical. Only monitoring IT and contacting it shortly before launch is too little, too late.',
       checklist: [
         { id: 'c-approval', text: 'Mentions the IT service owner’s approval role or ability to block the launch.' },
-        { id: 'c-influence', text: 'Separates small interest from the IT service owner’s critical influence.' },
+        { id: 'c-influence', text: 'Separates the IT service owner’s small interest from their critical influence.' },
       ],
       verification: 'needs-review',
     },
@@ -339,19 +339,19 @@ export const TASKS: ReviewTask[] = [
             id: 'ev-capacity',
             text: 'IT operations staff have limited capacity and competing operational priorities.',
             fit: 'expected',
-            feedback: 'This affects how and when the project can get IT operations time, and how supportive IT is likely to be.',
+            feedback: 'This affects how and when the project can get IT operations time. It concerns capacity, not the IT service owner’s interest or influence.',
           },
           {
             id: 'ev-not-following',
-            text: 'IT operations staff did not ask for the pilot and are not actively following it.',
+            text: 'The IT service owner did not ask for the pilot and is not actively following it.',
             fit: 'expected',
-            feedback: 'This is the evidence for small interest. It says nothing about the IT service owner’s influence.',
+            feedback: 'This is the evidence that the IT service owner’s interest is small. It says nothing about their influence.',
           },
           {
             id: 'ev-availability',
-            text: 'The IT service owner has not confirmed staff availability for configuration.',
+            text: 'The IT service owner has not yet confirmed that IT operations staff will be available during configuration.',
             fit: 'expected',
-            feedback: 'The project depends on IT operations staff whose time is not yet secured.',
+            feedback: 'The project depends on IT operations staff whose time the IT service owner has not yet secured.',
           },
           {
             id: 'ev-budget',
@@ -367,7 +367,7 @@ export const TASKS: ReviewTask[] = [
           },
           {
             id: 'ev-staff',
-            text: 'Some teaching staff worry about the time needed to keep course pages up to date.',
+            text: 'Some teaching staff have raised concerns about the extra time they will need to keep their course pages up to date.',
             fit: 'differs',
             feedback: 'Important for adoption, but it concerns teaching staff, not IT.',
           },
@@ -385,13 +385,13 @@ export const TASKS: ReviewTask[] = [
             text: 'G1 Collaborate: critical influence, large interest',
             fit: 'acceptable',
             feedback:
-              'Defensible. Closer involvement than the minimum can make sense, because IT operations staff do part of the configuration work. Keep their limited capacity in mind when you ask for their time.',
+              'Defensible. Closer involvement of the IT service owner than the minimum can make sense, because their staff do part of the configuration work. Keep the limited capacity of IT operations staff in mind.',
           },
           {
             id: 'g2',
             text: 'G2 Satisfy: critical influence, small interest',
             fit: 'expected',
-            feedback: 'Fits the evidence: the IT service owner can block the launch (critical influence), while IT is not following the pilot (small interest).',
+            feedback: 'Fits the evidence: the IT service owner can block the launch (critical influence) but did not ask for the pilot and is not following it (small interest).',
           },
           {
             id: 'g3',
@@ -437,16 +437,16 @@ export const TASKS: ReviewTask[] = [
     ],
     feedback: {
       summary:
-        'The proposal is right that IT shows little interest, but it treats “IT” as one group whose influence is also marginal, which places it in G4 (Monitor). The case separates the IT service owner, who has critical influence even if interest is small, from IT operations staff, who have limited capacity. Small interest does not mean marginal influence.',
+        'The proposal is right that interest is small: the IT service owner did not ask for the pilot and is not following it. But it treats IT as if its influence were also marginal, which places it in G4 (Monitor). The IT service owner must approve the integration and can block the launch, so their influence is critical. Small interest does not mean marginal influence.',
       evidence:
-        'Given the information in this case, the IT service owner (head of IT operations) must approve the integration and can block the launch, so their influence is critical even if their interest is small. IT operations staff have limited capacity and competing priorities, did not ask for the pilot and are not following it, and the IT service owner has not yet confirmed their availability for configuration.',
+        'Given the information in this case, the IT service owner (head of IT operations) must approve the integration and can block the launch, so their influence is critical; they did not ask for the pilot and are not following it, so their interest is small. Separately, IT operations staff have limited capacity and competing priorities, and the IT service owner has not yet confirmed their availability for configuration.',
       concept:
-        'The lecturer classifies stakeholders by influence (critical or marginal) and interest (small or large) into four groups, with the strategies G1 Collaborate, G2 Satisfy, G3 Inform and G4 Monitor. Influence is about how much the project needs a stakeholder, for example for approvals or resources. Critical influence with small interest is G2, so Satisfy is the natural starting point for the IT service owner. G1 Collaborate is also defensible if you want IT closely involved in configuration.',
+        'The lecturer classifies stakeholders by influence (critical or marginal) and interest (small or large) into four groups, with the strategies G1 Collaborate, G2 Satisfy, G3 Inform and G4 Monitor. Influence is about how much the project needs a stakeholder, for example for approvals or resources. Critical influence with small interest is G2, so Satisfy is the natural starting point for the IT service owner. G1 Collaborate is also defensible if you want the IT service owner closely involved in configuration.',
       conceptSources: ['stakeholder-mapping', 'stakeholder-classification', 'stakeholder-strategies'],
       betterProposal:
-        '“IT shows little interest in the pilot, but the IT service owner has critical influence: they must approve the integration and can block the launch. We will treat the IT service owner as G2 (Satisfy): agree the approval requirements early, reserve configuration capacity with IT operations before configuration starts, and keep IT briefly updated at agreed checkpoints.”',
+        '“The IT service owner shows little interest in the pilot but has critical influence: they must approve the integration and can block the launch. We will treat the IT service owner as G2 (Satisfy): agree the approval requirements early, reserve configuration capacity with IT operations staff before configuration starts, and keep the IT service owner briefly updated at agreed checkpoints.”',
       more: [
-        'The support–sabotage scale adds another angle. Nothing suggests that IT opposes the pilot, but with competing priorities in IT operations its support may be closer to neutrality or “go slowly” than to full support.',
+        'The support–sabotage scale adds another angle. Nothing suggests that the IT service owner opposes the pilot, but with competing priorities in IT operations their support may be closer to neutrality or “go slowly” than to full support.',
         'On the lecturer’s support × influence grid, a critical stakeholder who is supportive is involved as a key stakeholder, while one who is not supportive calls for reducing dependency. Both point the same way here: agree approval requirements and capacity early, and avoid a plan that relies on a quick IT decision just before launch (PDF p. 27, slide 56; PDF p. 28, slide 57).',
         'Formal authority is only one source of influence. Teaching staff have no approval role, but adoption depends on them, which also gives them influence over whether the pilot creates value.',
       ],
@@ -636,9 +636,9 @@ export const TASKS: ReviewTask[] = [
           },
           {
             id: 'risk-interest',
-            text: 'IT operations staff are not following the pilot, so they may be unaware of the project’s plans and progress.',
+            text: 'The IT service owner is not following the pilot, so they may be unaware of the project’s plans and progress.',
             fit: 'differs',
-            feedback: 'This describes IT’s attitude and a mild consequence. It is not the risk that follows from the availability assumption.',
+            feedback: 'This describes the IT service owner’s attitude and a mild consequence. It is not the risk that follows from the availability assumption.',
           },
           {
             id: 'risk-budget',
@@ -819,7 +819,7 @@ export const TASKS: ReviewTask[] = [
           },
           {
             id: 'f-it-interest',
-            text: 'IT operations staff have limited capacity and are not following the pilot.',
+            text: 'IT operations staff have limited capacity, and the IT service owner is not following the pilot.',
             fit: 'differs',
             feedback: 'Relevant to engagement, but not a reason for evaluating before rollout.',
           },

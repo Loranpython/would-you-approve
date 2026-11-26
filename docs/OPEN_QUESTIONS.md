@@ -123,6 +123,14 @@ Other changes:
 - **IT wording:** Task 2 already said "IT operations staff" in the matching item, model answer and "More detail" since version 1.3.0, so nothing changed there.
 - **Better proposal:** it now says the project-success criterion is "assessed one semester after launch", matching the lecturer's example (PDF p. 47, slide 110) cited in "More detail".
 
+**Claim 3: interest and influence belong to the same stakeholder (group review, content version 1.7.0).**
+
+- **Case file and briefing:** the IT service owner is now the one who did not ask for the pilot and is not following it. IT operations staff keep only "limited capacity and competing operational priorities".
+- **Task 3:** the evidence options, G1/G2 feedback, Stage 1 model reasoning, checklist, feedback, better proposal and "More detail" now tie both influence and interest to the IT service owner. Capacity refers to IT operations staff. Option ids are unchanged.
+- **Tasks 5 and 6:** the distractors that tied "not following the pilot" to IT operations staff now refer to the IT service owner.
+- **Task 2 and the challenge:** checked; they refer to IT operations capacity and work only.
+- **Length balance:** one Task 3 distractor was lengthened so that the longer relevant option does not stand out.
+
 **Second case.** The content model and navigation support more cases. Each case is a folder such as `src/content/coursehub/` that exports one `CaseStudy` and is listed in `src/content/cases.ts`. Links take the form `#/case/<id>/…`, and saved progress is stored per case. Only CourseHub is built.
 
 ## Other notes
