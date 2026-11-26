@@ -118,6 +118,11 @@ Other changes:
 - **Minimum length:** "Submit initial judgement" stays disabled until the reasoning has at least five words that contain letters. Only the length is checked, never the content. A message under the field says: "Write one or two sentences in your own words before you continue."
 - **Task 1 hint 1:** replaced with the group's wording: "Compare the items in the claim with the intended benefits in the case file. What kind of thing is each of them?"
 
+**Claim 2 consistency (group review, content version 1.6.0).**
+
+- **IT wording:** Task 2 already said "IT operations staff" in the matching item, model answer and "More detail" since version 1.3.0, so nothing changed there.
+- **Better proposal:** it now says the project-success criterion is "assessed one semester after launch", matching the lecturer's example (PDF p. 47, slide 110) cited in "More detail".
+
 **Second case.** The content model and navigation support more cases. Each case is a folder such as `src/content/coursehub/` that exports one `CaseStudy` and is listed in `src/content/cases.ts`. Links take the form `#/case/<id>/…`, and saved progress is stored per case. Only CourseHub is built.
 
 ## Other notes
