@@ -1,0 +1,37 @@
+{
+  "name": "would-you-approve-this",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "build:single": "tsc -b && vite build --mode single",
+    "preview": "vite preview",
+    "test": "vitest run",
+    "typecheck": "tsc -b",
+    "check:build": "node scripts/check-build.mjs",
+    "e2e": "node scripts/e2e.mjs",
+    "screenshots": "node scripts/screenshots.mjs",
+    "verify": "npm test && npm run build && npm run build:single && npm run check:build && npm run e2e"
+  },
+  "dependencies": {
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1"
+  },
+  "devDependencies": {
+    "@testing-library/jest-dom": "^8.0.0",
+    "@testing-library/react": "^16.3.3",
+    "@testing-library/user-event": "^14.6.13",
+    "@types/node": "^26.6.11",
+    "@types/react": "^19.3.3",
+    "@types/react-dom": "^19.3.0",
+    "@vitejs/plugin-react": "^6.3.0",
+    "jsdom": "^31.0.1",
+    "puppeteer-core": "^25.19.0",
+    "typescript": "^7.0.2",
+    "vite": "^8.4.0",
+    "vite-plugin-singlefile": "^2.3.4",
+    "vitest": "^5.1.2"
+  }
+}

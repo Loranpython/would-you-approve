@@ -1,0 +1,13 @@
+# Course material and our report: never commit, bundle or publish
+sources/
+
+node_modules/
+dist/
+dist-single/
+*.log
+.DS_Store
+screenshots/
+*.tsbuildinfo
+
+# Draft text for our report: local only until the report is submitted
+docs/REPORT_DRAFTS.md
