@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest';
 import { CASES } from '../content/cases';
 import { COURSEHUB } from '../content/coursehub';
 import type { TaskPart } from '../content/types';
-import { checkPart, parseNumber, shuffled, type PartValue } from './check';
+import { checkPart, countWords, MIN_REASONING_WORDS, parseNumber, shuffled, type PartValue } from './check';
 
 const allParts = CASES.flatMap((c) =>
   [...c.tasks, ...c.transfer.parts].flatMap((t) => t.parts.map((p) => ({ c, t, p }))),
@@ -101,6 +101,19 @@ describe('schedule questions are checked against the calculation', () => {
     expect(parseNumber('eleven')).toBeNull();
     expect(parseNumber('')).toBeNull();
     expect(parseNumber('11-12')).toBeNull();
+  });
+});
+
+describe('minimum length of the Stage 1 reasoning', () => {
+  it('counts only words that contain letters', () => {
+    expect(MIN_REASONING_WORDS).toBe(5);
+    expect(countWords('')).toBe(0);
+    expect(countWords('----')).toBe(0);
+    expect(countWords('- - - - - - -')).toBe(0);
+    expect(countWords('1 2 3 4 5 6')).toBe(0);
+    expect(countWords('  IT can block the launch  ')).toBe(5);
+    expect(countWords('B has float; C finishes later.')).toBe(6);
+    expect(countWords('Ærlig talt: én, to, tre, fire')).toBe(6);
   });
 });
 

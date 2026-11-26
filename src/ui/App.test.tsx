@@ -79,7 +79,7 @@ async function answerPart(part: TaskPart, scope: HTMLElement) {
   }
 }
 
-async function submitStage1(judgement: JudgementId, reasoning = 'My first reasoning.') {
+async function submitStage1(judgement: JudgementId, reasoning = 'My first reasoning about this claim.') {
   await user.click(within(main()).getByRole('radio', { name: JUDGEMENT_NAME[judgement] }));
   await user.type(within(main()).getByLabelText(STAGE1.reasoningPrompt), reasoning);
   await user.click(within(main()).getByRole('radio', { name: 'Medium' }));
@@ -189,7 +189,7 @@ describe('user journey', () => {
     expect(screen.getByText(t1.hints[0].text)).toBeInTheDocument();
 
     go(`#/case/coursehub/task/${t1.id}`);
-    await submitStage1('approve', 'The deliverables look complete.');
+    await submitStage1('approve', 'The deliverables in the claim look complete.');
     for (const p of t1.parts) await answerPart(p, main());
     await user.click(screen.getByRole('button', { name: 'Submit and see feedback' }));
     expect(within(main()).getAllByText('Differs from the model answer').length).toBeGreaterThan(0);
@@ -206,7 +206,7 @@ describe('user journey', () => {
     const row = screen.getByRole('row', { name: /1\. Expected results/ });
     const cells = within(row).getAllByRole('cell');
     expect(cells[0]).toHaveTextContent('Approve');
-    expect(cells[1]).toHaveTextContent('The deliverables look complete.');
+    expect(cells[1]).toHaveTextContent('The deliverables in the claim look complete.');
     expect(cells[2]).toHaveTextContent('Revise');
     expect(cells[2]).toHaveTextContent('What changedThe intended benefits are effects, not deliverables.');
     expect(cells[3]).toHaveTextContent('1'); // revisions
@@ -230,13 +230,43 @@ describe('user journey', () => {
     expect(model).toHaveTextContent('The project manager expects it, but the IT service owner has not confirmed it.');
   }, 20_000);
 
+  it.each(C.tasks.map((t) => [t.id] as const))(
+    '%s: Stage 1 needs at least five words of reasoning before it can be submitted',
+    async (taskId) => {
+      render(<App store={createStore(storage)} />);
+      go(`#/case/coursehub/task/${taskId}`);
+      const submit = () => screen.getByRole('button', { name: STAGE1.submit });
+      const field = screen.getByLabelText(STAGE1.reasoningPrompt);
+      await user.click(within(main()).getByRole('radio', { name: /^Revise/ }));
+      await user.click(within(main()).getByRole('radio', { name: 'Medium' }));
+
+      // Empty, symbols only, numbers only and four words: not enough.
+      for (const text of ['', '----', '!!! ??? ... 123 456 789', 'Four words are here']) {
+        await user.clear(field);
+        if (text) await user.type(field, text);
+        expect(submit(), JSON.stringify(text)).toBeDisabled();
+        expect(screen.getByText(STAGE1.reasoningTooShort)).toBeInTheDocument();
+      }
+
+      // Five words is enough; the content itself is not judged.
+      await user.type(field, ' indeed');
+      expect(submit()).toBeEnabled();
+      expect(screen.queryByText(STAGE1.reasoningTooShort)).toBeNull();
+      await user.click(submit());
+      expect(screen.queryByRole('button', { name: STAGE1.submit })).toBeNull(); // Stage 1 recorded
+    },
+    20_000,
+  );
+
   it('blocks each stage until it is complete, and says what is missing', async () => {
     render(<App store={createStore(storage)} />);
     go('#/case/coursehub/task/t4');
+    await user.type(screen.getByLabelText(STAGE1.reasoningPrompt), 'C finishes later than B does.');
     await user.click(screen.getByRole('button', { name: STAGE1.submit }));
     expect(screen.getByRole('alert')).toHaveTextContent('Choose an initial judgement.');
-    expect(screen.getByRole('alert')).toHaveTextContent('Explain your judgement in one or two sentences.');
+    expect(screen.getByRole('alert')).toHaveTextContent('Say how confident you are.');
     expect(screen.queryByLabelText('What is the project duration?')).toBeNull();
+    await user.clear(screen.getByLabelText(STAGE1.reasoningPrompt));
 
     await submitStage1('revise');
     await user.type(screen.getByLabelText('What is the project duration?'), 'eleven');

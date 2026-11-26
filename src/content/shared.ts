@@ -14,6 +14,7 @@ export const STAGE1 = {
   reasoningPrompt: 'In one or two sentences, explain your judgement.',
   reasoningPlaceholder: 'I would … because …',
   submit: 'Submit initial judgement',
+  reasoningTooShort: 'Write one or two sentences in your own words before you continue.',
   recorded: 'Recorded. You can still change your judgement after the feedback; this first judgement stays in your summary.',
 };
 

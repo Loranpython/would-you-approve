@@ -48,6 +48,14 @@ export function parseNumber(raw: string): number | null {
   return Number.isFinite(n) ? n : null;
 }
 
+/** Minimum length of the Stage 1 reasoning. Only the length is checked, never the content. */
+export const MIN_REASONING_WORDS = 5;
+
+/** Counts words that contain at least one letter, so "----" or "1 2 3" count as nothing. */
+export function countWords(text: string): number {
+  return text.split(/\s+/).filter((w) => /\p{L}/u.test(w)).length;
+}
+
 export function isPartAnswered(part: TaskPart, value: PartValue | undefined): boolean {
   switch (part.kind) {
     case 'single':

@@ -100,8 +100,8 @@ export const TASKS: ReviewTask[] = [
     ],
     hints: [
       {
-        text: 'Look at the intended benefits in the case. Are the three items in the claim the same kind of thing as those benefits?',
-        verification: 'needs-review',
+        text: 'Compare the items in the claim with the intended benefits in the case file. What kind of thing is each of them?',
+        verification: 'derived-from-brief', // wording supplied by the group
       },
       {
         text: 'For each item, ask: is this something the project hands over, or something that changes once people start using what was handed over?',

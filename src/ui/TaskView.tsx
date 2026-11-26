@@ -1,7 +1,16 @@
 import { useContext, useEffect, useId, useRef, useState, type ReactNode, type Ref } from 'react';
 import { AUTO_CHECK_LABEL, CONFIDENCE_NOTE, CONFIDENCE_OPTIONS, JUDGEMENT_OPTIONS, STAGE1, STAGE2 } from '../content/shared';
 import type { CaseStudy, Confidence, JudgementId, ReviewTask } from '../content/types';
-import { asString, checkJudgement, checkPart, isPartAnswered, partResultText, type PartValue } from '../logic/check';
+import {
+  asString,
+  checkJudgement,
+  checkPart,
+  countWords,
+  isPartAnswered,
+  MIN_REASONING_WORDS,
+  partResultText,
+  type PartValue,
+} from '../logic/check';
 import { scenarioResult } from '../logic/scenarios';
 import { ensureTask, taskOf } from '../state/progress';
 import { href } from '../state/router';
@@ -127,7 +136,9 @@ export function TaskView({ caseStudy, task }: { caseStudy: CaseStudy; task: Revi
   const d1 = t.initialDraft;
   const missing1: string[] = [];
   if (!d1.judgement) missing1.push('Choose an initial judgement.');
-  if (!d1.reasoning.trim()) missing1.push('Explain your judgement in one or two sentences.');
+  // Only the length is checked (at least five words with letters), never the content.
+  const reasoningLongEnough = countWords(d1.reasoning) >= MIN_REASONING_WORDS;
+  if (!reasoningLongEnough) missing1.push(STAGE1.reasoningTooShort);
   if (!d1.confidence) missing1.push('Say how confident you are.');
 
   const submitStage1 = () => {
@@ -251,13 +262,25 @@ export function TaskView({ caseStudy, task }: { caseStudy: CaseStudy; task: Revi
                 value={d1.reasoning}
                 placeholder={STAGE1.reasoningPlaceholder}
                 onChange={(e) => update((x) => void (x.initialDraft.reasoning = e.target.value))}
+                aria-describedby={reasoningLongEnough ? undefined : `${uid}-reasoning-short`}
               />
+              {!reasoningLongEnough && (
+                <span className="field__hint" id={`${uid}-reasoning-short`}>
+                  {STAGE1.reasoningTooShort}
+                </span>
+              )}
               <span className="field__hint">Saved in this browser. Written answers are never marked automatically.</span>
             </div>
             <ConfidencePicker value={d1.confidence} onChange={(c) => update((x) => void (x.initialDraft.confidence = c))} />
             {problems1 && <Problems list={missing1} innerRef={problemsRef} />}
             <div className="btn-row">
-              <button type="button" className="btn btn--primary" onClick={submitStage1}>
+              <button
+                type="button"
+                className="btn btn--primary"
+                onClick={submitStage1}
+                disabled={!reasoningLongEnough}
+                aria-describedby={reasoningLongEnough ? undefined : `${uid}-reasoning-short`}
+              >
                 {STAGE1.submit}
               </button>
             </div>

@@ -113,6 +113,11 @@ Other changes:
 - **Other sentences:** checked and unchanged. The Section 5 follow-up ("Configuration can therefore start…") belongs to the flawed claim itself.
 - **New test:** the intro and all neutral sentences must not name the flaw.
 
+**Stage 1 minimum and Task 1 hint (group review, content version 1.5.0).**
+
+- **Minimum length:** "Submit initial judgement" stays disabled until the reasoning has at least five words that contain letters. Only the length is checked, never the content. A message under the field says: "Write one or two sentences in your own words before you continue."
+- **Task 1 hint 1:** replaced with the group's wording: "Compare the items in the claim with the intended benefits in the case file. What kind of thing is each of them?"
+
 **Second case.** The content model and navigation support more cases. Each case is a folder such as `src/content/coursehub/` that exports one `CaseStudy` and is listed in `src/content/cases.ts`. Links take the form `#/case/<id>/…`, and saved progress is stored per case. Only CourseHub is built.
 
 ## Other notes
