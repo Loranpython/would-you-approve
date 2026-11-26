@@ -6,6 +6,7 @@ import {
   checkJudgement,
   checkPart,
   countWords,
+  endSentence,
   isPartAnswered,
   MIN_REASONING_WORDS,
   partResultText,
@@ -407,12 +408,12 @@ export function TaskView({ caseStudy, task }: { caseStudy: CaseStudy; task: Revi
               </div>
               <p className="result-row__note">
                 {answers.judgement && task.judgementFeedback[answers.judgement].text}
-                {judgementFit !== 'expected' && <> Model judgement: {judgementLabel(task.expectedJudgement)}.</>}
+                {judgementFit !== 'expected' && <> Model judgement: {endSentence(judgementLabel(task.expectedJudgement) ?? '')}</>}
               </p>
               {t.attempts.length > 1 && (
                 <p className="result-row__note">
                   Your initial judgement was: {judgementLabel(initial.judgement)}.
-                  {last.revisionNote && <> What changed: {last.revisionNote}</>}
+                  {last.revisionNote && <> What changed: {endSentence(last.revisionNote)}</>}
                 </p>
               )}
             </div>

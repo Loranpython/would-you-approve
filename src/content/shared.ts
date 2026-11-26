@@ -8,13 +8,16 @@ export const JUDGEMENT_OPTIONS: { id: JudgementId; label: string; description: s
   { id: 'more-info', label: 'Need more information', description: 'The case does not let me judge this yet.' },
 ];
 
+/** Shown under any written answer that is still shorter than five words. */
+export const WRITTEN_TOO_SHORT = 'Write one or two sentences in your own words before you continue.';
+
 export const STAGE1 = {
   title: 'Your initial judgement',
   question: 'Would you approve this claim as written?',
   reasoningPrompt: 'In one or two sentences, explain your judgement.',
   reasoningPlaceholder: 'I would … because …',
   submit: 'Submit initial judgement',
-  reasoningTooShort: 'Write one or two sentences in your own words before you continue.',
+  reasoningTooShort: WRITTEN_TOO_SHORT,
   recorded: 'Recorded. You can still change your judgement after the feedback; this first judgement stays in your summary.',
 };
 

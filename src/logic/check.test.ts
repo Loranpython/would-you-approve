@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest';
 import { CASES } from '../content/cases';
 import { COURSEHUB } from '../content/coursehub';
 import type { TaskPart } from '../content/types';
-import { checkPart, countWords, MIN_REASONING_WORDS, parseNumber, shuffled, type PartValue } from './check';
+import { checkPart, countWords, endSentence, MIN_REASONING_WORDS, parseNumber, shuffled, type PartValue } from './check';
 
 const allParts = CASES.flatMap((c) =>
   [...c.tasks, ...c.transfer.parts].flatMap((t) => t.parts.map((p) => ({ c, t, p }))),
@@ -114,6 +114,16 @@ describe('minimum length of the Stage 1 reasoning', () => {
     expect(countWords('  IT can block the launch  ')).toBe(5);
     expect(countWords('B has float; C finishes later.')).toBe(6);
     expect(countWords('Ærlig talt: én, to, tre, fire')).toBe(6);
+  });
+});
+
+describe('joining sentences', () => {
+  it('adds a full stop only when the text does not already end a sentence', () => {
+    expect(endSentence('Revise')).toBe('Revise.');
+    expect(endSentence('…delaying configuration and the launch.')).toBe('…delaying configuration and the launch.');
+    expect(endSentence('Is this confirmed?')).toBe('Is this confirmed?');
+    expect(endSentence('“IT has not confirmed it.”')).toBe('“IT has not confirmed it.”');
+    expect(endSentence('11 working days  ')).toBe('11 working days.');
   });
 });
 

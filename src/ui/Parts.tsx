@@ -1,6 +1,6 @@
 import { useId, type ReactNode } from 'react';
 import type { CaseSchedule, ChoiceOption, Fit, TaskPart } from '../content/types';
-import { asList, asMap, asString, partProblem, shuffled, type PartResult, type PartValue } from '../logic/check';
+import { asList, asMap, asString, endSentence, isPartAnswered, partProblem, shuffled, type PartResult, type PartValue } from '../logic/check';
 import { formatPath } from '../logic/schedule';
 import { FitBadge } from './common';
 
@@ -29,7 +29,8 @@ const ordered = <T extends { id: string }>(items: T[], shuffle: boolean | undefi
   shuffle ? shuffled(items, seed, key) : items;
 
 function Problem({ part, value, show }: { part: TaskPart; value: PartValue | undefined; show: boolean }) {
-  const problem = show ? partProblem(part, value) : null;
+  // Written answers show their own message under the field (see TextAnswer).
+  const problem = show && part.kind !== 'text' ? partProblem(part, value) : null;
   return problem ? <p className="field__problem">{problem}</p> : null;
 }
 
@@ -79,7 +80,7 @@ function SingleChoice({ part, value, onChange, locked, result, seed, shuffleKey 
           {chosenOpt.fit !== 'expected' &&
             best.map((o) => (
               <p key={o.id} className="small">
-                <strong>Model answer:</strong> {o.text}. {asModelNote(o.feedback)}
+                <strong>Model answer:</strong> {endSentence(o.text)} {asModelNote(o.feedback)}
               </p>
             ))}
         </div>
@@ -174,7 +175,7 @@ function Classify({ part, value, onChange, locked, result, seed, shuffleKey }: P
               <div className="result-row" style={{ borderBottom: 0, paddingBottom: 0 }}>
                 <div>
                   <FitBadge fit={fit} />
-                  {fit !== 'expected' && <span className="small"> Model answer: {label(item.correct)}.</span>}
+                  {fit !== 'expected' && <span className="small"> Model answer: {endSentence(label(item.correct))}</span>}
                 </div>
                 <p className="result-row__note" style={{ margin: 0 }}>
                   {item.explanation}
@@ -210,7 +211,7 @@ function NumberField({ part, value, onChange, locked, result }: PartProps & { pa
       </div>
       {result && (
         <ResultLine fit={result.fit}>
-          {result.fit !== 'expected' && <p className="result-row__note">Model answer: {result.expectedText}.</p>}
+          {result.fit !== 'expected' && <p className="result-row__note">Model answer: {endSentence(result.expectedText ?? '')}</p>}
         </ResultLine>
       )}
     </div>
@@ -258,7 +259,7 @@ function PathBuilder({ part, value, onChange, locked, result, schedule }: PartPr
       )}
       {result && (
         <ResultLine fit={result.fit}>
-          {result.fit !== 'expected' && <p className="result-row__note">Model answer: {result.expectedText}.</p>}
+          {result.fit !== 'expected' && <p className="result-row__note">Model answer: {endSentence(result.expectedText ?? '')}</p>}
         </ResultLine>
       )}
     </div>
@@ -281,7 +282,7 @@ function YesNo({ part, value, onChange, locked, result }: PartProps & { part: Ex
       </div>
       {result && (
         <ResultLine fit={result.fit}>
-          {result.fit !== 'expected' && <p className="result-row__note">Model answer: {result.expectedText}.</p>}
+          {result.fit !== 'expected' && <p className="result-row__note">Model answer: {endSentence(result.expectedText ?? '')}</p>}
         </ResultLine>
       )}
     </fieldset>
@@ -290,6 +291,8 @@ function YesNo({ part, value, onChange, locked, result }: PartProps & { part: Ex
 
 function TextAnswer({ part, value, onChange, locked }: PartProps & { part: Extract<TaskPart, { kind: 'text' }> }) {
   const id = useId();
+  // Same minimum as the Stage 1 reasoning: at least five words with letters. Content is never judged.
+  const tooShort = !locked && !isPartAnswered(part, value);
   return (
     <div className="field">
       <label className="field__label" htmlFor={id}>
@@ -302,7 +305,13 @@ function TextAnswer({ part, value, onChange, locked }: PartProps & { part: Extra
         readOnly={locked}
         onChange={(e) => onChange(e.target.value)}
         rows={3}
+        aria-describedby={tooShort ? `${id}-short` : undefined}
       />
+      {tooShort && (
+        <span className="field__hint" id={`${id}-short`}>
+          {partProblem(part, value)}
+        </span>
+      )}
       {!locked && <span className="field__hint">Written answers are saved in this browser and are never marked automatically.</span>}
     </div>
   );

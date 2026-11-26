@@ -74,10 +74,49 @@ async function answerPart(part: TaskPart, scope: HTMLElement) {
       await user.click(q.getByRole('radio', { name: expectedDelay(part, C.schedule) === 'yes' ? /^Yes/ : /^No/ }));
       break;
     case 'text':
-      await user.type(q.getByLabelText(part.prompt), 'My own answer.');
+      await user.type(q.getByLabelText(part.prompt), 'My own answer to this question.');
       break;
   }
 }
+
+/** Answers one part so that it differs from the model answer, to bring up every "Model answer" line. */
+async function answerPartWrongly(part: TaskPart, scope: HTMLElement) {
+  const q = within(scope);
+  switch (part.kind) {
+    case 'single':
+      await user.click(q.getByRole('radio', { name: part.options.find((o) => o.fit === 'differs')!.text }));
+      break;
+    case 'multi':
+      for (const o of part.options.filter((o) => o.fit === 'differs')) await user.click(q.getByRole('checkbox', { name: o.text }));
+      break;
+    case 'classify':
+      for (const item of part.items) {
+        const group = q.getByRole('group', { name: item.text });
+        const wrong = part.categories.find((c) => c.id !== item.correct)!.label;
+        await user.click(within(group).getByRole('radio', { name: wrong }));
+      }
+      break;
+    case 'number':
+      await user.type(q.getByLabelText(part.prompt), '99');
+      break;
+    case 'path':
+      await user.click(q.getByRole('button', { name: /^Add E:/ }));
+      break;
+    case 'delay':
+      await user.click(q.getByRole('radio', { name: expectedDelay(part, C.schedule) === 'yes' ? /^No/ : /^Yes/ }));
+      break;
+    case 'text':
+      await user.type(q.getByLabelText(part.prompt), 'An answer written in my words');
+      break;
+  }
+}
+
+/** No doubled full stop anywhere in the rendered page (open or collapsed sections). */
+const expectNoDoubleStops = (where: string) => {
+  const text = document.body.textContent ?? '';
+  const i = text.search(/\.\./);
+  expect(i, `${where}: "…${text.slice(Math.max(0, i - 40), i + 20)}…"`).toBe(-1);
+};
 
 async function submitStage1(judgement: JudgementId, reasoning = 'My first reasoning about this claim.') {
   await user.click(within(main()).getByRole('radio', { name: JUDGEMENT_NAME[judgement] }));
@@ -257,6 +296,76 @@ describe('user journey', () => {
     },
     20_000,
   );
+
+  it('never shows a doubled full stop in feedback, even when every answer differs from the model', async () => {
+    render(<App store={createStore(storage)} />);
+    for (const task of C.tasks) {
+      go(`#/case/coursehub/task/${task.id}`);
+      await submitStage1(task.expectedJudgement === 'approve' ? 'revise' : 'approve', 'A first judgement in my words.');
+      for (const p of task.parts) await answerPartWrongly(p, main());
+      await user.click(screen.getByRole('button', { name: 'Submit and see feedback' }));
+      expect(screen.getByRole('heading', { name: 'Feedback' })).toBeInTheDocument();
+      expectNoDoubleStops(task.id);
+
+      // A revision note without its own full stop.
+      await user.click(screen.getByRole('button', { name: 'Revise my judgement or answers' }));
+      await user.type(screen.getByLabelText('What changed your judgement?'), 'I read the case file again');
+      await user.click(screen.getByRole('button', { name: 'Submit revised review' }));
+      expectNoDoubleStops(`${task.id} after revision`);
+    }
+
+    go('#/case/coursehub/challenge');
+    for (const part of C.transfer.parts) {
+      const section = screen.getByRole('region', { name: part.title });
+      for (const p of part.parts) await answerPartWrongly(p, section);
+      await user.click(within(section).getByRole('radio', { name: 'Low' }));
+      await user.click(within(section).getByRole('button', { name: /^Submit Part/ }));
+      await user.click(within(section).getByRole('button', { name: 'Yes, submit' }));
+    }
+    expectNoDoubleStops('challenge');
+    go('#/case/coursehub/summary');
+    expectNoDoubleStops('summary');
+  }, 90_000);
+
+  it('asks for at least five words in written Stage 2 and challenge answers; the revision note stays optional', async () => {
+    render(<App store={createStore(storage)} />);
+    const t2 = C.tasks.find((t) => t.id === 't2')!;
+    const written = t2.parts.find((p) => p.kind === 'text')!;
+    go('#/case/coursehub/task/t2');
+    await submitStage1('revise');
+    for (const p of t2.parts.filter((p) => p.kind !== 'text')) await answerPart(p, main());
+
+    const field = screen.getByLabelText(written.prompt);
+    await user.type(field, '---- ????');
+    expect(screen.getByText(STAGE1.reasoningTooShort)).toBeInTheDocument();
+    await user.click(screen.getByRole('button', { name: 'Submit and see feedback' }));
+    expect(screen.queryByRole('heading', { name: 'Feedback' })).toBeNull();
+    expect(screen.getByRole('alert')).toHaveTextContent('Complete question 3.');
+
+    await user.clear(field);
+    await user.type(field, 'Adoption judged one semester after launch');
+    expect(screen.queryByText(STAGE1.reasoningTooShort)).toBeNull();
+    await user.click(screen.getByRole('button', { name: 'Submit and see feedback' }));
+    expect(screen.getByRole('heading', { name: 'Feedback' })).toBeInTheDocument();
+
+    // The revision note is optional: resubmitting with it empty works.
+    await user.click(screen.getByRole('button', { name: 'Revise my judgement or answers' }));
+    await user.click(screen.getByRole('button', { name: 'Submit revised review' }));
+    expect(screen.getByText(/attempt 2/)).toBeInTheDocument();
+
+    // Challenge Part B: three words are not enough.
+    go('#/case/coursehub/challenge');
+    const partB = C.transfer.parts.find((p) => p.id === 'B')!;
+    const section = screen.getByRole('region', { name: partB.title });
+    for (const p of partB.parts) await user.type(within(section).getByLabelText(p.prompt), 'Too short here');
+    await user.click(within(section).getByRole('radio', { name: 'Medium' }));
+    await user.click(within(section).getByRole('button', { name: /^Submit Part B/ }));
+    expect(within(section).queryByRole('button', { name: 'Yes, submit' })).toBeNull();
+    expect(within(section).getAllByText(STAGE1.reasoningTooShort)).toHaveLength(partB.parts.length);
+    for (const p of partB.parts) await user.type(within(section).getByLabelText(p.prompt), ' and now long enough');
+    await user.click(within(section).getByRole('button', { name: /^Submit Part B/ }));
+    expect(within(section).getByRole('button', { name: 'Yes, submit' })).toBeInTheDocument();
+  }, 30_000);
 
   it('blocks each stage until it is complete, and says what is missing', async () => {
     render(<App store={createStore(storage)} />);

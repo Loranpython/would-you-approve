@@ -1,6 +1,7 @@
 // Automatic checks for structured answers. Written answers ('text' parts) are
 // never checked here: they are self-assessed against a checklist.
 
+import { WRITTEN_TOO_SHORT } from '../content/shared';
 import type { CaseSchedule, Fit, JudgementId, ReviewTask, TaskPart } from '../content/types';
 import { scenarioResult } from './scenarios';
 import { formatPath, isCriticalPath } from './schedule';
@@ -48,7 +49,16 @@ export function parseNumber(raw: string): number | null {
   return Number.isFinite(n) ? n : null;
 }
 
-/** Minimum length of the Stage 1 reasoning. Only the length is checked, never the content. */
+/**
+ * Ends text with a full stop unless it already ends a sentence (".", "!", "?",
+ * also before a closing quote or bracket). Avoids "launch.." in joined feedback.
+ */
+export function endSentence(text: string): string {
+  const t = text.trimEnd();
+  return /[.!?…]["'”’)]?$/.test(t) ? t : `${t}.`;
+}
+
+/** Minimum length of written answers (Stage 1 reasoning and written questions). Only the length is checked, never the content. */
 export const MIN_REASONING_WORDS = 5;
 
 /** Counts words that contain at least one letter, so "----" or "1 2 3" count as nothing. */
@@ -71,7 +81,7 @@ export function isPartAnswered(part: TaskPart, value: PartValue | undefined): bo
     case 'number':
       return parseNumber(asString(value)) !== null;
     case 'text':
-      return asString(value).trim().length > 0;
+      return countWords(asString(value)) >= MIN_REASONING_WORDS;
   }
 }
 
@@ -88,7 +98,7 @@ export function partProblem(part: TaskPart, value: PartValue | undefined): strin
     case 'path':
       return 'Select at least one activity.';
     case 'text':
-      return 'Write a short answer.';
+      return WRITTEN_TOO_SHORT;
     default:
       return 'Choose an answer.';
   }

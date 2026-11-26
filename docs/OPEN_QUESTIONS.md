@@ -131,6 +131,12 @@ Other changes:
 - **Task 2 and the challenge:** checked; they refer to IT operations capacity and work only.
 - **Length balance:** one Task 3 distractor was lengthened so that the longer relevant option does not stand out.
 
+**Punctuation and written answers (group review, no content version change).**
+
+- **Doubled full stop:** "Model answer" lines and other joined feedback no longer add a full stop after text that already ends a sentence. Tests check every task and the challenge, with all answers deliberately wrong, plus all content text.
+- **Minimum length for written answers:** the five-word rule now also applies to the Stage 2 written questions (Task 2 criterion, Task 3 practical action, Task 5 rewrite) and to the challenge. The same message appears under each field. "What changed your judgement?" stays optional.
+- **Why no version change:** no ids, questions or correct answers changed, so saved answers are still applied correctly.
+
 **Second case.** The content model and navigation support more cases. Each case is a folder such as `src/content/coursehub/` that exports one `CaseStudy` and is listed in `src/content/cases.ts`. Links take the form `#/case/<id>/…`, and saved progress is stored per case. Only CourseHub is built.
 
 ## Other notes

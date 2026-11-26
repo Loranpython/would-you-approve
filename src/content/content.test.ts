@@ -187,6 +187,11 @@ describe('site-wide wording', () => {
     expect(text).not.toMatch(/manage closely|keep satisfied|keep informed/i);
   });
 
+  it('contains no doubled full stop', () => {
+    const doubled = siteStrings.filter((x) => /\.\./.test(x));
+    expect(doubled).toEqual([]);
+  });
+
   it('does not use "free float"', () => {
     expect(text).not.toMatch(/free float/i);
   });

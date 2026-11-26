@@ -2,6 +2,7 @@ import { CREDIT, INTRO, NOT_ENDORSED, RESEARCH, SITE_SUBTITLE, SITE_TITLE, SOURC
 import { CASES } from '../content/cases';
 import { formatSource, SOURCES } from '../content/sources';
 import { caseOf, taskOf, taskStatus } from '../state/progress';
+import { endSentence } from '../logic/check';
 import { href } from '../state/router';
 import { PageHeading, useProgressState } from './common';
 
@@ -80,7 +81,7 @@ export function AboutPage() {
         <p>{INTRO.scope}</p>
         {CASES.map((c) => (
           <p key={c.id}>
-            <strong>{c.title}.</strong> {c.disclaimer} {c.credit}
+            <strong>{endSentence(c.title)}</strong> {c.disclaimer} {c.credit}
           </p>
         ))}
         <p>{SOURCE_NOTE}</p>
