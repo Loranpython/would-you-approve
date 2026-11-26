@@ -9,7 +9,7 @@ export const PROPOSAL: Proposal = {
   note: 'Simulated proposal with deliberately chosen strengths and errors. Drafted with AI assistance and reviewed by the project group.',
   title: 'Project proposal: CourseHub pilot',
   intro:
-    'CourseHub will bring course information for one department together in one place, so that students and staff no longer need to search several systems. This proposal sets out the expected results, how success will be judged, stakeholder engagement, the schedule, key assumptions and next steps.',
+    'CourseHub will bring course information for one department together in one place, so that students and staff no longer need to search several systems. This proposal sets out the expected results, how success will be judged, stakeholder engagement, the schedule, resources and readiness, and next steps.',
   sections: [
     {
       id: 'p-results',
@@ -24,7 +24,7 @@ export const PROPOSAL: Proposal = {
       taskId: 't2',
       heading: '2. Success criteria',
       claim: 'Our success criteria are early stakeholder involvement, clear responsibilities and regular communication.',
-      after: 'The project team will review these at each project meeting.',
+      after: 'They will be presented to the faculty sponsor for approval.',
       verification: 'derived-from-brief',
     },
     {
@@ -32,7 +32,7 @@ export const PROPOSAL: Proposal = {
       taskId: 't3',
       heading: '3. Stakeholder engagement',
       before:
-        'The faculty sponsor will receive monthly status updates. Teaching staff and student representatives will take part in usability testing.',
+        'The faculty sponsor will receive monthly status updates. Teaching staff, student representatives and students with accessibility requirements will take part in usability testing.',
       claim: 'IT has limited interest in the pilot, so it should only be monitored and contacted shortly before launch.',
       verification: 'derived-from-brief',
     },

@@ -105,6 +105,14 @@ Other changes:
 - **Activity B renamed** "Prepare and deliver staff training", with the same duration and dependencies. Diagram nodes now grow to fit three-line names.
 - **To review on the site:** the rewritten Task 3 and Task 5 options and feedback.
 
+**Proposal neutral sentences (group review, content version 1.4.0).**
+
+- **Intro:** now lists "resources and readiness" instead of "key assumptions", which gave away Task 5.
+- **Claim 3, sentence before it:** now includes students with accessibility requirements in usability testing. Leaving them out created an unintended second error.
+- **Claim 2, sentence after it:** "The project team will review these at each project meeting" hinted at success factors, the Task 2 answer. It now reads "They will be presented to the faculty sponsor for approval."
+- **Other sentences:** checked and unchanged. The Section 5 follow-up ("Configuration can therefore start…") belongs to the flawed claim itself.
+- **New test:** the intro and all neutral sentences must not name the flaw.
+
 **Second case.** The content model and navigation support more cases. Each case is a folder such as `src/content/coursehub/` that exports one `CaseStudy` and is listed in `src/content/cases.ts`. Links take the form `#/case/<id>/…`, and saved progress is stored per case. Only CourseHub is built.
 
 ## Other notes

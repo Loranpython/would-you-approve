@@ -169,11 +169,14 @@ describe('nothing gives the answer away before submission', () => {
     }
   });
 
-  it.each(CASES.map((c) => [c.id, c] as [string, CaseStudy]))('%s: proposal headings do not name the flaw', (_id, c) => {
-    for (const s of c.proposal.sections) {
-      expect(s.heading).not.toMatch(/assumption|risk|error|mistake|wrong|flaw|sound|critical|output|outcome|factor/i);
-    }
-  });
+  it.each(CASES.map((c) => [c.id, c] as [string, CaseStudy]))(
+    '%s: proposal headings, intro and neutral sentences do not name the flaw',
+    (_id, c) => {
+      const flaw = /assumption|risk|error|mistake|wrong|flaw|sound|critical|output|outcome|factor/i;
+      const neutral = [c.proposal.intro, ...c.proposal.sections.flatMap((s) => [s.heading, s.before ?? '', s.after ?? ''])];
+      for (const text of neutral) expect(text).not.toMatch(flaw);
+    },
+  );
 });
 
 describe('site-wide wording', () => {
