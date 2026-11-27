@@ -89,6 +89,16 @@ try {
     if (shots) await page.screenshot({ path: join(shots, `claim-3-${width}.png`), fullPage: false });
   }
 
+  // Briefing: headings in the same row of the two-column grid line up exactly.
+  for (const width of [1366, 1920]) {
+    await page.setViewport({ width, height: 900 });
+    await go('#/case/coursehub/briefing');
+    const tops = await page.evaluate(() =>
+      ['constraints', 'benefits', 'stakeholders', 'planning'].map((id) => Math.round(document.getElementById(`brief-${id}`).getBoundingClientRect().top)),
+    );
+    check(tops[0] === tops[1] && tops[2] === tops[3], `${width}px: briefing headings aligned per row ${JSON.stringify(tops)}`);
+  }
+
   // B. Evidence buttons: open, scroll into view and briefly highlight the section.
   for (const width of [1366, 390]) {
     await page.setViewport({ width, height: 800 });

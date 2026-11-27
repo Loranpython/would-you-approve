@@ -456,7 +456,7 @@ export function TaskView({ caseStudy, task }: { caseStudy: CaseStudy; task: Revi
 
           <FeedbackDetails feedback={task.feedback} schedule={caseStudy.schedule} />
 
-          <div className="btn-row no-print" style={{ borderTop: '1px solid var(--border)', paddingTop: 16 }}>
+          <div className="btn-row no-print" style={{ paddingTop: 16 }}>
             <button type="button" className="btn btn--quiet" onClick={startRevision}>
               Revise my judgement or answers
             </button>
