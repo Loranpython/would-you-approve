@@ -143,7 +143,7 @@ function Classify({ part, value, onChange, locked, result, seed, shuffleKey }: P
   const map = asMap(value);
   const baseName = useId();
   const items = ordered(part.items, part.shuffle, seed, shuffleKey);
-  const label = (id: string) => part.categories.find((c) => c.id === id)?.label ?? '—';
+  const label = (id: string) => part.categories.find((c) => c.id === id)?.label ?? '-';
   return (
     <fieldset>
       <legend>{part.prompt}</legend>

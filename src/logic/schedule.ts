@@ -3,7 +3,7 @@
 // Assumptions (match the activity): finish-to-start dependencies, no lags,
 // no resource constraints, project starts at day 0, integer working days.
 //
-// Rules follow the course handouts (PDF p. 96, slides 220–221), using the
+// Rules follow the course handouts (PDF p. 96, slides 220-221), using the
 // standard meaning of the merge-point rule: at a merge point the largest EF
 // of the predecessors becomes the successor's ES.
 
@@ -24,7 +24,7 @@ export interface ActivityTiming {
   ef: number;
   ls: number;
   lf: number;
-  /** Float (slack) = LS − ES = LF − EF. */
+  /** Float (slack) = LS - ES = LF - EF. */
   float: number;
   critical: boolean;
 }
@@ -85,7 +85,7 @@ export function computeSchedule(input: ActivityInput[]): ScheduleResult {
   }
   const projectDuration = Math.max(...ordered.map((a) => ef.get(a.id)!));
 
-  // Backward pass: LF = smallest LS of successors (project end at finish); LS = LF − duration.
+  // Backward pass: LF = smallest LS of successors (project end at finish); LS = LF - duration.
   const ls = new Map<string, number>();
   const lf = new Map<string, number>();
   for (const a of [...ordered].reverse()) {

@@ -18,7 +18,7 @@ export const STAGE1 = {
   reasoningPlaceholder: 'I would … because …',
   submit: 'Submit initial judgement',
   reasoningTooShort: WRITTEN_TOO_SHORT,
-  recorded: 'Recorded. You can still change your judgement after the feedback; this first judgement stays in your summary.',
+  recorded: 'Recorded. You can still change your judgement after the feedback. This first judgement stays in your summary.',
 };
 
 export const STAGE2 = {
@@ -28,7 +28,7 @@ export const STAGE2 = {
   submitRevised: 'Submit revised review',
   revisedJudgement: 'Your judgement after feedback',
   revisionNote: 'What changed your judgement?',
-  revisionNoteHint: 'Optional. A sentence or two for your own reflection; it appears in your summary.',
+  revisionNoteHint: 'Optional. A sentence or two for your own reflection. It appears in your summary.',
 };
 
 export const CONFIDENCE_OPTIONS: { id: Confidence; label: string }[] = [

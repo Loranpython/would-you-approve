@@ -110,7 +110,7 @@ export const CASE_SECTIONS: CaseSection[] = [
       {
         id: 's-staff',
         label: 'Teaching staff',
-        text: 'Must maintain course content after launch; adoption depends on their participation. Some have raised concerns about the extra time needed to keep pages up to date.',
+        text: 'Must maintain course content after launch, and adoption depends on their participation. Some have raised concerns about the extra time needed to keep pages up to date.',
         verification: 'derived-from-brief',
       },
       {

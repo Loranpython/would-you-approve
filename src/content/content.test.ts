@@ -187,6 +187,11 @@ describe('site-wide wording', () => {
     expect(text).not.toMatch(/manage closely|keep satisfied|keep informed/i);
   });
 
+  it('uses plain hyphens only: no en dash, em dash or minus sign', () => {
+    const dashed = siteStrings.filter((x) => /[–—−]/.test(x));
+    expect(dashed).toEqual([]);
+  });
+
   it('contains no doubled full stop', () => {
     const doubled = siteStrings.filter((x) => /\.\./.test(x));
     expect(doubled).toEqual([]);
@@ -235,6 +240,6 @@ describe('site-wide wording', () => {
     expect(about.CREDIT).toBe(
       'Developed by Group 35 for TPK5100 Applied Project Management.',
     );
-    expect(text).toContain("Case inspired by the lecturer's illustration example (handouts PDF p. 47, slides 109–110).");
+    expect(text).toContain("Case inspired by the lecturer's illustration example (handouts PDF p. 47, slides 109-110).");
   });
 });

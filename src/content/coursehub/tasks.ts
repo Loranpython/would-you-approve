@@ -16,7 +16,7 @@ export const TASKS: ReviewTask[] = [
     id: 't1',
     number: 1,
     title: 'Expected results',
-    lesson: 'Outputs are what the project delivers; outcomes are what changes when they are used.',
+    lesson: 'Outputs are what the project delivers. Outcomes are what changes when they are used.',
     evidenceSections: ['background', 'benefits', 'stakeholders'],
     expectedJudgement: 'revise',
     judgementFeedback: {
@@ -132,7 +132,7 @@ export const TASKS: ReviewTask[] = [
     id: 't2',
     number: 2,
     title: 'Success criteria',
-    lesson: 'Success factors make success more likely; success criteria are how success is judged.',
+    lesson: 'Success factors make success more likely. Success criteria are how success is judged.',
     evidenceSections: ['constraints', 'benefits', 'stakeholders'],
     expectedJudgement: 'revise',
     judgementFeedback: {
@@ -246,7 +246,7 @@ export const TASKS: ReviewTask[] = [
           'Turn one of the proposal’s three items into a success criterion. Say what would be judged, how it would be measured, who would assess it and when.',
         placeholder: 'Criterion: … Measured by … Assessed by … When: …',
         modelAnswer:
-          'Example: “Teaching staff, IT operations staff and student representatives judge that collaboration during delivery was effective (process success). Measured by a short survey and a review of the decision log; assessed by the project manager with the faculty sponsor; at handover.” The practice itself (“regular communication”) stays in the plan as a success factor.',
+          'Example: “Teaching staff, IT operations staff and student representatives judge that collaboration during delivery was effective (process success). Measured by a short survey and a review of the decision log. Assessed by the project manager with the faculty sponsor at handover.” The practice itself (“regular communication”) stays in the plan as a success factor.',
         checklist: [
           { id: 'c-judged', text: 'Describes something that will be judged, not something the team will do.' },
           { id: 'c-how', text: 'Says how it will be measured or what evidence will be used.' },
@@ -280,7 +280,7 @@ export const TASKS: ReviewTask[] = [
         'success-framework',
       ],
       betterProposal:
-        '“Success factors: early stakeholder involvement, clear responsibilities and regular communication, each linked to concrete actions in the plan. Success criteria: delivered within NOK 400,000 before the teaching period (project management success, assessed at handover); stakeholders judge collaboration during delivery to have been effective (process success, assessed at handover); students and staff actively use CourseHub (project success, assessed one semester after launch, with a measure and target agreed with the sponsor).”',
+        '“Success factors: early stakeholder involvement, clear responsibilities and regular communication, each linked to concrete actions in the plan. Success criteria: delivery within NOK 400,000 before the teaching period (project management success, assessed at handover). Stakeholders judge collaboration during delivery to have been effective (process success, assessed at handover). Students and staff actively use CourseHub (project success, assessed one semester after launch, with a measure and target agreed with the sponsor).”',
       more: [
         'Collaboration can appear on both sides, and that is not a trick. “Hold regular check-ins with IT operations” is a success factor: a practice the team commits to. “IT operations staff and teaching staff judge that collaboration during delivery was effective” is a process-success criterion: a judgement made afterwards. The question is whether you are describing what you will do, or how you will judge what happened.',
         'The criteria in the matching exercise are still broad. “Students and staff use the platform” needs an agreed measure (for example active use or course coverage), a target and an assessment date before anyone can say whether it was met. The lecturer’s own example for a digital learning platform assesses adoption one semester after launch, not at handover (PDF p. 47, slide 110).',
@@ -439,15 +439,15 @@ export const TASKS: ReviewTask[] = [
       summary:
         'The proposal is right that interest is small: the IT service owner did not ask for the pilot and is not following it. But it treats IT as if its influence were also marginal, which places it in G4 (Monitor). The IT service owner must approve the integration and can block the launch, so their influence is critical. Small interest does not mean marginal influence.',
       evidence:
-        'Given the information in this case, the IT service owner (head of IT operations) must approve the integration and can block the launch, so their influence is critical; they did not ask for the pilot and are not following it, so their interest is small. Separately, IT operations staff have limited capacity and competing priorities, and the IT service owner has not yet confirmed their availability for configuration.',
+        'Given the information in this case, the IT service owner (head of IT operations) must approve the integration and can block the launch, so their influence is critical. They did not ask for the pilot and are not following it, so their interest is small. Separately, IT operations staff have limited capacity and competing priorities, and the IT service owner has not yet confirmed their availability for configuration.',
       concept:
         'The lecturer classifies stakeholders by influence (critical or marginal) and interest (small or large) into four groups, with the strategies G1 Collaborate, G2 Satisfy, G3 Inform and G4 Monitor. Influence is about how much the project needs a stakeholder, for example for approvals or resources. Critical influence with small interest is G2, so Satisfy is the natural starting point for the IT service owner. G1 Collaborate is also defensible if you want the IT service owner closely involved in configuration.',
       conceptSources: ['stakeholder-mapping', 'stakeholder-classification', 'stakeholder-strategies'],
       betterProposal:
         '“The IT service owner shows little interest in the pilot but has critical influence: they must approve the integration and can block the launch. We will treat the IT service owner as G2 (Satisfy): agree the approval requirements early, reserve configuration capacity with IT operations staff before configuration starts, and keep the IT service owner briefly updated at agreed checkpoints.”',
       more: [
-        'The support–sabotage scale adds another angle. Nothing suggests that the IT service owner opposes the pilot, but with competing priorities in IT operations their support may be closer to neutrality or “go slowly” than to full support.',
-        'On the lecturer’s support × influence grid, a critical stakeholder who is supportive is involved as a key stakeholder, while one who is not supportive calls for reducing dependency. Both point the same way here: agree approval requirements and capacity early, and avoid a plan that relies on a quick IT decision just before launch (PDF p. 27, slide 56; PDF p. 28, slide 57).',
+        'The support-sabotage scale adds another angle. Nothing suggests that the IT service owner opposes the pilot, but with competing priorities in IT operations their support may be closer to neutrality or “go slowly” than to full support.',
+        'On the lecturer’s support × influence grid, a critical stakeholder who is supportive is involved as a key stakeholder, while one who is not supportive calls for reducing dependency. Both point the same way here: agree approval requirements and capacity early, and avoid a plan that relies on a quick IT decision just before launch (PDF p. 27, slide 56, and PDF p. 28, slide 57).',
         'Formal authority is only one source of influence. Teaching staff have no approval role, but adoption depends on them, which also gives them influence over whether the pilot creates value.',
       ],
       verification: 'verified-against-handout',
@@ -479,7 +479,7 @@ export const TASKS: ReviewTask[] = [
     },
     initialReasoning: {
       modelAnswer:
-        'Whether an activity is critical depends on the network, not on how important it is to the business. D cannot start until both B and C have finished; C finishes on day {ef:baseline:C} and B on day {ef:baseline:B}, so C sets D’s start and B has {float:baseline:B|days} of float.',
+        'Whether an activity is critical depends on the network, not on how important it is to the business. D cannot start until both B and C have finished. C finishes on day {ef:baseline:C} and B on day {ef:baseline:B}, so C sets D’s start and B has {float:baseline:B|days} of float.',
       checklist: [
         { id: 'c-importance', text: 'Separates business importance from position on the critical path.' },
         { id: 'c-float', text: 'Mentions that B has float in the baseline plan.' },
@@ -542,10 +542,10 @@ export const TASKS: ReviewTask[] = [
       evidence:
         'From the network table: B ({duration:baseline:B} days) and C ({duration:baseline:C} days) both follow A and both must finish before D can start. D’s earliest start is therefore the later of B’s and C’s earliest finish: day {es:baseline:D}.',
       concept:
-        'The critical path is the longest path through the network, and it determines the shortest possible project duration. In the forward pass, EF = ES + duration, and at a merge point the largest EF of the predecessors becomes the successor’s ES. In the backward pass, LS = LF − duration, and at a burst point the smallest LS of the successors becomes the predecessor’s LF. Float (also called slack) = LS − ES = LF − EF.',
+        'The critical path is the longest path through the network, and it determines the shortest possible project duration. In the forward pass, EF = ES + duration, and at a merge point the largest EF of the predecessors becomes the successor’s ES. In the backward pass, LS = LF - duration, and at a burst point the smallest LS of the successors becomes the predecessor’s LF. Float (also called slack) = LS - ES = LF - EF.',
       conceptSources: ['critical-path', 'pass-rules', 'float'],
       betterProposal:
-        '“Staff training (B) matters for adoption, but in the current plan B has {float:baseline:B|days} of float; the critical path is {paths:baseline}. Because B’s float is the schedule’s only margin on that branch, we will still monitor B closely.”',
+        '“Staff training (B) matters for adoption, but in the current plan B has {float:baseline:B|days} of float. The critical path is {paths:baseline}. Because B’s float is the schedule’s only margin on that branch, we will still monitor B closely.”',
       more: [
         'What happens after a one-day increase: with B at 4 days, the project still takes {duration:bPlus1} working days, but B’s float drops to {float:bPlus1:B} and there are two critical paths: {paths:bPlus1}. The end date is unchanged, but the schedule has lost its margin. A further delay in either B or C would now move the launch.'
       ],
@@ -708,7 +708,7 @@ export const TASKS: ReviewTask[] = [
         prompt: 'Rewrite the proposal’s statement so that it is accurate and useful.',
         placeholder: 'We assume that …',
         modelAnswer:
-          '“We assume that IT operations staff will be available during configuration; the IT service owner has not yet confirmed this. The project manager will ask the IT service owner to confirm and reserve the capacity by an agreed date before configuration starts. If it is not confirmed by then, we will use the agreed contingency plan, for example limited external support within the budget or, with the faculty sponsor’s approval, a smaller pilot scope.”',
+          '“We assume that IT operations staff will be available during configuration. The IT service owner has not yet confirmed this. The project manager will ask the IT service owner to confirm and reserve the capacity by an agreed date before configuration starts. If it is not confirmed by then, we will use the agreed contingency plan, for example limited external support within the budget or, with the faculty sponsor’s approval, a smaller pilot scope.”',
         checklist: [
           { id: 'c-assumption', text: 'States availability as an assumption, not a fact.' },
           { id: 'c-reduce', text: 'Says what will be done to reduce the risk, such as confirming and reserving capacity.' },
@@ -737,9 +737,9 @@ export const TASKS: ReviewTask[] = [
         'The risk lecture asks you to select and justify a response (acceptance, reduction, sharing, transfer or avoidance) and to keep a risk register with clear ownership, response timing and current status. Here the main response is reduction: confirm and reserve capacity early. A contingency plan prepares for the case where the risk happens anyway. The lecturer also notes that responses should be escalated when they exceed the project’s authority, and in this case the faculty sponsor approves major scope changes.',
       conceptSources: ['risk-objectives', 'threat-responses', 'contingency-plans', 'risk-register'],
       betterProposal:
-        '“We assume IT operations staff will be available during configuration, but the IT service owner has not yet confirmed this. The project manager will obtain confirmation and reserve capacity by an agreed date before configuration starts. If capacity is not confirmed, we will use the agreed contingency plan; any reduction in scope will go to the faculty sponsor for approval.”',
+        '“We assume IT operations staff will be available during configuration, but the IT service owner has not yet confirmed this. The project manager will obtain confirmation and reserve capacity by an agreed date before configuration starts. If capacity is not confirmed, we will use the agreed contingency plan. Any reduction in scope will go to the faculty sponsor for approval.”',
       more: [
-        'Possible contingency options, each with a trade-off: buy limited external support within the NOK 400,000 budget; reduce the pilot scope, which needs the sponsor’s approval; or re-plan the work. Be careful with re-planning: in the baseline, configuration (C) has {float:baseline:C|days} of float, so any slip in configuration moves the launch unless the IT-dependent work can be rearranged within configuration itself.',
+        'Possible contingency options, each with a trade-off: buy limited external support within the NOK 400,000 budget, reduce the pilot scope (which needs the sponsor’s approval), or re-plan the work. Be careful with re-planning: in the baseline, configuration (C) has {float:baseline:C|days} of float, so any slip in configuration moves the launch unless the IT-dependent work can be rearranged within configuration itself.',
         'Writing the risk in the register does not reduce it. The register is useful because it records who owns the response, when it will happen and its current status, and because those entries are followed up.',
       ],
       verification: 'verified-against-handout',
@@ -815,7 +815,7 @@ export const TASKS: ReviewTask[] = [
             id: 'f-duration',
             text: 'Preparing and delivering staff training (activity B) is planned to take three working days.',
             fit: 'differs',
-            feedback: 'A planning detail; it does not bear on whether to evaluate before rollout.',
+            feedback: 'A planning detail. It does not bear on whether to evaluate before rollout.',
           },
           {
             id: 'f-it-interest',
@@ -847,14 +847,14 @@ export const TASKS: ReviewTask[] = [
       summary:
         'This is a sound recommendation, and approving it is the right call. It respects the approved scope and recognises that delivering the pilot does not show that the intended benefits occurred.',
       evidence:
-        'Given the information in this case: institution-wide rollout is outside the approved scope; the faculty sponsor approves major scope changes; the intended benefits only appear once the platform is used; and adoption depends on teaching staff, some of whom are concerned about the workload.',
+        'Given the information in this case, institution-wide rollout is outside the approved scope, and the faculty sponsor approves major scope changes. The intended benefits only appear once the platform is used. Adoption depends on teaching staff, some of whom are concerned about the workload.',
       concept:
         'The lecturer argues that the life-cycle view should extend beyond delivery into operation and use, and that the timing of a success assessment can change the conclusion. Evaluating a pilot before deciding on rollout applies both ideas.',
       conceptSources: ['lifecycle-beyond-delivery', 'success-objectives'],
       betterProposal:
         'The claim can stand. A stronger version would add what will be evaluated and when: “Before any institution-wide rollout, evaluate pilot use and benefits (for example active use, staff maintenance workload and repetitive questions) one semester after launch, and ask the faculty sponsor to approve any additional scope.”',
       more: [
-        'This is the activity’s example of useful AI assistance. The suggestion is consistent with the case and the course concepts, and you can explain why it holds. Accepting it after checking is good judgement; rejecting it just because an AI wrote it would not be.',
+        'This is the activity’s example of useful AI assistance. The suggestion is consistent with the case and the course concepts, and you can explain why it holds. Accepting it after checking is good judgement. Rejecting it just because an AI wrote it would not be.',
       ],
       verification: 'verified-against-handout',
     },

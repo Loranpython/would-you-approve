@@ -28,7 +28,7 @@ describe('baseline network', () => {
     expect(r.criticalPaths).toEqual([['A', 'C', 'D', 'E']]);
   });
 
-  it('gives B one day of float, equal to both LS − ES and LF − EF', () => {
+  it('gives B one day of float, equal to both LS - ES and LF - EF', () => {
     const b = r.byId.B;
     expect(b.float).toBe(1);
     expect(b.ls - b.es).toBe(b.lf - b.ef);

@@ -136,16 +136,16 @@ export function buildSummary(c: CaseStudy, p: Progress): CaseSummary {
   return { tasks, transfer, reflection: caseOf(p, c.id).reflection };
 }
 
-export const judgementLabel = (j?: JudgementId) => JUDGEMENT_OPTIONS.find((o) => o.id === j)?.label ?? '—';
-export const confidenceLabel = (c?: Confidence) => CONFIDENCE_OPTIONS.find((o) => o.id === c)?.label ?? '—';
-export const fitText = (f?: Fit) => (f ? FIT_LABELS[f].label.toLowerCase() : '—');
+export const judgementLabel = (j?: JudgementId) => JUDGEMENT_OPTIONS.find((o) => o.id === j)?.label ?? '-';
+export const confidenceLabel = (c?: Confidence) => CONFIDENCE_OPTIONS.find((o) => o.id === c)?.label ?? '-';
+export const fitText = (f?: Fit) => (f ? FIT_LABELS[f].label.toLowerCase() : '-');
 
 /** Plain-text version of the summary for download. Built locally; never sent anywhere. */
 export function summaryText(c: CaseStudy, p: Progress, now = new Date()): string {
   const s = buildSummary(c, p);
   const L: string[] = [];
   const rule = '-'.repeat(60);
-  L.push(`${SITE_TITLE} — review summary`, `Case: ${c.title}`, `Saved: ${now.toLocaleString('en-GB')}`, '');
+  L.push(`Review summary: ${SITE_TITLE}`, `Case: ${c.title}`, `Saved: ${now.toLocaleString('en-GB')}`, '');
   L.push('This summary records your own review. It is not a grade and does not measure overall learning.', '');
 
   L.push('REVIEW SUMMARY', rule);
@@ -177,7 +177,7 @@ export function summaryText(c: CaseStudy, p: Progress, now = new Date()): string
   L.push('YOUR EXPLANATIONS (self-assessed, not checked automatically)', rule);
   for (const t of s.tasks) {
     const r = t.initialReasoning;
-    if (r && r.total) L.push(`Claim ${t.number}: initial reasoning — your checklist: ${r.ticked} of ${r.total} points ticked`, '');
+    if (r && r.total) L.push(`Claim ${t.number}, initial reasoning. Your checklist: ${r.ticked} of ${r.total} points ticked.`, '');
     for (const x of t.texts) {
       L.push(`Claim ${t.number}: ${x.prompt}`, `  ${x.answer.trim() || '(no answer written)'}`);
       if (x.total) L.push(`  Your checklist: ${x.ticked} of ${x.total} points ticked`);

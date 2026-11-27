@@ -61,7 +61,7 @@ export function NetworkDiagram({ result, showResults, title }: { result: Schedul
   const deps = result.activities
     .filter((a) => a.predecessors.length)
     .map((a) => `${a.id} follows ${a.predecessors.join(' and ')}`)
-    .join('; ');
+    .join('. ');
   const desc = showResults
     ? `${deps}. Project duration ${result.projectDuration} working days. Critical path: ${result.criticalPaths.map(formatPath).join(' and ')}.`
     : `${deps}. The same information is in the table.`;
@@ -218,7 +218,7 @@ export function ScenarioView({
       {showResults && (
         <p className="small">
           Project duration: <strong>{result.projectDuration} working days</strong>. Critical{' '}
-          {result.criticalPaths.length > 1 ? 'paths' : 'path'}: <strong>{result.criticalPaths.map(formatPath).join(' and ')}</strong>. Float = LS − ES.
+          {result.criticalPaths.length > 1 ? 'paths' : 'path'}: <strong>{result.criticalPaths.map(formatPath).join(' and ')}</strong>. Float = LS - ES.
         </p>
       )}
     </div>

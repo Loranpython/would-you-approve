@@ -116,6 +116,9 @@ const expectNoDoubleStops = (where: string) => {
   const text = document.body.textContent ?? '';
   const i = text.search(/\.\./);
   expect(i, `${where}: "…${text.slice(Math.max(0, i - 40), i + 20)}…"`).toBe(-1);
+  // Plain hyphens only, in everything the page shows.
+  const d = text.search(/[–—−]/);
+  expect(d, `${where}: dash in "…${text.slice(Math.max(0, d - 40), d + 20)}…"`).toBe(-1);
 };
 
 async function submitStage1(judgement: JudgementId, reasoning = 'My first reasoning about this claim.') {

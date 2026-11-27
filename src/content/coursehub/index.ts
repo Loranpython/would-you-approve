@@ -11,7 +11,7 @@ export const COURSEHUB: CaseStudy = {
     'A faculty pilots one learning platform for one department. Review the project proposal before it goes to the sponsor.',
   disclaimer: CASE_DISCLAIMER,
   briefing: { intro: CASE_BRIEFING_INTRO, sectionIds: ['constraints', 'benefits', 'stakeholders', 'planning'] },
-  credit: "Case inspired by the lecturer's illustration example (handouts PDF p. 47, slides 109–110).",
+  credit: "Case inspired by the lecturer's illustration example (handouts PDF p. 47, slides 109-110).",
   sections: CASE_SECTIONS,
   schedule: CASE_SCHEDULE,
   proposal: PROPOSAL,

@@ -38,7 +38,7 @@ export function ProposalOverview({ caseStudy }: { caseStudy: CaseStudy }) {
         <PageHeading>Read the proposal</PageHeading>
         <p>
           Read the proposal as a whole, with the case file beside it. Then review the six highlighted claims one by
-          one. Some are sound; some need revision.
+          one. Some are sound, and some need revision.
         </p>
       </div>
       <ProposalFrame proposal={proposal}>

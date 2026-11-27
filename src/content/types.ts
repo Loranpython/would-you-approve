@@ -23,7 +23,7 @@ export interface SourceRef {
   file: 'Full-sett-of-handouts-.pdf' | 'Final_Report.pdf';
   /** PDF page number printed at the bottom of the handout page. */
   pdfPage?: number;
-  /** Lecturer's slide number(s) printed under each slide, e.g. "54" or "101–102". */
+  /** Lecturer's slide number(s) printed under each slide, e.g. "54" or "101-102". */
   slide?: string;
   /** Report section number, e.g. "5.3". */
   section?: string;

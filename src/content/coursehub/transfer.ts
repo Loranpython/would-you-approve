@@ -90,9 +90,9 @@ export const TRANSFER: TransferChallenge = {
       ],
       modelExplanation: [
         'Project management success looks largely achieved: the pilot was delivered on time and within budget. Scope and specifications are not mentioned, so that part is not yet known.',
-        'Project success is currently problematic: few staff maintain their pages and students still use the old channels, so adoption is low. But two months may be too early for a final conclusion: the timing of an assessment can change the conclusion, and two months is earlier than the point at which the lecturer’s own digital learning platform example assesses adoption (one semester after launch; PDF p. 47, slide 110).',
+        'Project success is currently problematic: few staff maintain their pages and students still use the old channels, so adoption is low. But two months may be too early for a final conclusion: the timing of an assessment can change the conclusion, and two months is earlier than the point at which the lecturer’s own digital learning platform example assesses adoption (one semester after launch, PDF p. 47, slide 110).',
         'Delivery success does not guarantee value. A project can be well managed and still not, or not yet, create the benefits it was meant to.',
-        'Evidence to examine next: usage data; teaching staff’s maintenance workload and their reasons for not participating; whether the old channels are still active; feedback from students, including students with accessibility requirements; and whether repetitive questions to staff have changed.',
+        'Evidence to examine next: usage data, teaching staff’s maintenance workload and their reasons for not participating, and whether the old channels are still active. Also look at feedback from students (including students with accessibility requirements) and at whether repetitive questions to staff have changed.',
       ],
       checklist: [
         { id: 'c-pm', text: 'Says that on time and within budget points to project management success, while scope and specifications are not stated.' },

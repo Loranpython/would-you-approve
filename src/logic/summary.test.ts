@@ -49,5 +49,6 @@ describe('review summary', () => {
     expect(text).toContain('Claim 4 sounded convincing.');
     expect(text).toContain('self-assessed, not checked automatically');
     expect(text).not.toMatch(/score|exam|certified|mastered/i);
+    expect(text).not.toMatch(/[–—−]/);
   });
 });
