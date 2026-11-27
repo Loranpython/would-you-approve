@@ -7,7 +7,10 @@ import { tmpdir } from 'node:os';
 import { join, resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import puppeteer from 'puppeteer-core';
+import { readFileSync } from 'node:fs';
 import { findChrome } from './chrome.mjs';
+
+const CONTENT_VERSION = readFileSync('src/content/version.ts', 'utf8').match(/'([0-9.]+)'/)[1];
 
 const shots = process.argv[2] ? resolve(process.argv[2]) : null;
 if (shots) mkdirSync(shots, { recursive: true });
@@ -21,7 +24,12 @@ const check = (ok, msg) => {
 };
 
 const profile = mkdtempSync(join(tmpdir(), 'wyat-e2e-'));
-const browser = await puppeteer.launch({ executablePath: findChrome(), headless: true, userDataDir: profile });
+const browser = await puppeteer.launch({
+  executablePath: findChrome(),
+  headless: true,
+  userDataDir: profile,
+  ignoreDefaultArgs: ['--hide-scrollbars'],
+});
 try {
   const page = await browser.newPage();
   const errors = [];
@@ -45,7 +53,7 @@ try {
     await page.setViewport({ width, height: 800 });
     for (const r of routes) {
       await go(r);
-      const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
+      const overflow = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
       check(overflow <= 0, `${r} at ${width}px: no horizontal scrolling (${overflow}px)`);
       const body = await page.evaluate(() => document.body.innerText);
       check(!/\bI(0[1-9]|1[0-6])\b/.test(body), `${r} at ${width}px: no interview ids`);
@@ -211,6 +219,78 @@ try {
     await page.screenshot({ path: join(shots, 'claim-3-light.png'), fullPage: true });
     await go('#/case/coursehub/summary');
     await page.screenshot({ path: join(shots, 'summary-light.png'), fullPage: true });
+  }
+
+  // Long unbroken student text in every field, typed but not submitted and then submitted:
+  // no route may become wider than the window at any width.
+  const LONG = 'kè(rjknrovhefjelqnc'.repeat(15);
+  const LONG_SENTENCE = `${LONG} and then a long ordinary sentence that keeps going for quite a while to fill the cell.`;
+  const fillStorage = (kind) =>
+    page.evaluate(
+      (kind, long, version) => {
+        const parts = { reason: long, action: long, rewrite: long, duration: long, 'float-b': long };
+        const c = { tasks: {}, transfer: {}, reflection: long };
+        for (const id of ['t1', 't2', 't3', 't4', 't5', 't6']) {
+          c.tasks[id] =
+            kind === 'typed'
+              ? { initialDraft: { reasoning: long }, draft: { parts }, hintsShown: 2, attempts: [], revising: false, selfCheck: {} }
+              : {
+                  initialDraft: { reasoning: '' },
+                  initial: { at: 1, judgement: 'approve', reasoning: long, confidence: 'low', hintsUsed: 2 },
+                  draft: { parts },
+                  hintsShown: 2,
+                  attempts: [
+                    { at: 2, answers: { judgement: 'approve', parts }, hintsUsed: 2 },
+                    { at: 3, answers: { judgement: 'revise', parts }, hintsUsed: 2, revisionNote: long },
+                  ],
+                  revising: false,
+                  selfCheck: {},
+                };
+        }
+        const tp = { duration: long, 'critical-path': ['A'], why: long, 'pm-success': long, 'project-success': long, 'evidence-next': long };
+        for (const id of ['A', 'B']) {
+          c.transfer[id] =
+            kind === 'typed'
+              ? { draft: { parts: tp }, selfCheck: {} }
+              : { draft: { parts: {} }, selfCheck: {}, submitted: { at: 4, answers: { parts: tp }, confidence: 'low', hintsUsed: 0 } };
+        }
+        localStorage.setItem('would-you-approve-this:progress', JSON.stringify({ contentVersion: version, seed: 1, cases: { coursehub: c } }));
+      },
+      kind,
+      LONG_SENTENCE,
+      CONTENT_VERSION,
+    );
+  // Names the outermost elements that stick out past the window, to point at the cause.
+  const widest = () =>
+    page.evaluate(() => {
+      const vw = window.innerWidth;
+      return [...document.querySelectorAll('body *')]
+        .filter((el) => {
+          const r = el.getBoundingClientRect();
+          const p = el.parentElement?.getBoundingClientRect();
+          return r.width > 0 && r.right > vw + 0.5 && !(p && p.right >= r.right - 0.5);
+        })
+        .slice(0, 3)
+        .map((el) => `${el.tagName.toLowerCase()}.${String(el.className).split(' ')[0]}`);
+    });
+  for (const kind of ['typed', 'submitted']) {
+    await go('#/');
+    await fillStorage(kind);
+    for (const width of [390, 1366, 1920]) {
+      await page.setViewport({ width, height: 900 });
+      for (const r of routes) {
+        await page.goto('about:blank'); // a full reload, so the app reads the stored answers
+        await go(r);
+        const shown = await page.evaluate((needle) => document.body.innerText.includes(needle) || [...document.querySelectorAll('textarea')].some((t) => t.value.includes(needle)), LONG.slice(0, 20));
+        const over = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
+        const where = over > 0 ? ` ${JSON.stringify(await widest())}` : '';
+        check(over <= 0 && (shown || !/task|challenge|summary/.test(r)), `long text (${kind}) ${r} at ${width}px: no horizontal scrolling (${over}px)${where}`);
+      }
+      if (shots) {
+        await go('#/case/coursehub/summary');
+        await page.screenshot({ path: join(shots, `summary-long-${kind}-${width}.png`), fullPage: true });
+      }
+    }
   }
 
   // 5. No network use and no errors.

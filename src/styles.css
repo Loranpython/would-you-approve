@@ -589,8 +589,9 @@ mark.claim {
 details.more > summary { cursor: pointer; font-weight: 650; color: var(--accent); padding: 4px 0; }
 details.more[open] > summary { margin-bottom: 8px; }
 
-.answer-compare { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-@media (max-width: 700px) { .answer-compare { grid-template-columns: 1fr; } }
+/* minmax(0, 1fr): a column never grows to fit a long unbroken word. */
+.answer-compare { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 14px; }
+@media (max-width: 700px) { .answer-compare { grid-template-columns: minmax(0, 1fr); } }
 .answer-box {
   background: var(--surface-2);
   border: 1px solid var(--border);
@@ -626,15 +627,40 @@ details.more[open] > summary { margin-bottom: 8px; }
 }
 
 .summary-table td, .summary-table th { white-space: normal; }
-.summary-table .reasoning-cell { min-width: 16em; white-space: pre-wrap; }
-/* Phones: one block per claim, each value with its own label, instead of seven narrow columns. */
-@media (max-width: 700px) {
+/* Text typed by students (or long words) must wrap anywhere, never widen the page. */
+.answer-box,
+.reasoning-cell,
+.cell-note,
+.summary-table td,
+.summary-table th,
+.kv dd,
+.result-row__answer,
+.result-row__note,
+textarea {
+  overflow-wrap: anywhere;
+}
+
+/* Desktop: fixed layout inside the content width. Initial reasoning takes the
+   flexible space; the number columns stay narrow. */
+.summary-table { table-layout: fixed; }
+.summary-table th:nth-child(1) { width: 17%; }
+.summary-table th:nth-child(2) { width: 15%; }
+.summary-table th:nth-child(4) { width: 19%; }
+.summary-table th:nth-child(5),
+.summary-table th:nth-child(6) { width: 7.5%; }
+.summary-table th:nth-child(7) { width: 9%; }
+.summary-table .reasoning-cell { white-space: pre-wrap; }
+.summary-table .fit { white-space: normal; max-width: 100%; }
+
+/* Below about 1200px the columns get too narrow: one block per claim, each value with its own label. */
+@media (max-width: 1200px) {
   .summary-table thead { display: none; }
   .summary-table,
   .summary-table tbody,
   .summary-table tr,
   .summary-table th,
   .summary-table td { display: block; width: auto; }
+  .summary-table th:nth-child(n) { width: auto; }
   .summary-table tr { border-bottom: 1px solid var(--border); padding: 10px 0; }
   .summary-table th,
   .summary-table td { border: 0; padding: 3px 0; text-align: left; }
@@ -657,7 +683,7 @@ details.more[open] > summary { margin-bottom: 8px; }
 .fact-dl { margin: 0; display: grid; gap: 10px; }
 .fact-dl dt { font-weight: 650; }
 .fact-dl dd { margin: 0; }
-.kv { display: grid; grid-template-columns: max-content 1fr; gap: 4px 14px; font-size: 0.93rem; }
+.kv { display: grid; grid-template-columns: max-content minmax(0, 1fr); gap: 4px 14px; font-size: 0.93rem; }
 .kv dt { color: var(--muted); }
 .kv dd { margin: 0; }
 
