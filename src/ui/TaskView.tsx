@@ -22,14 +22,12 @@ import { PartView } from './Parts';
 import { ClaimExcerpt } from './Proposal';
 import { NetworkDiagram } from './Schedule';
 
-function Step({ n, title, children, headingRef }: { n: string; title: string; children: ReactNode; headingRef?: Ref<HTMLHeadingElement> }) {
+/** A task step with a small bold caption such as "Step 1: Your initial judgement". */
+function Step({ title, children, headingRef }: { title: string; children: ReactNode; headingRef?: Ref<HTMLHeadingElement> }) {
   const id = useId();
   return (
     <section className="card step" aria-labelledby={id}>
-      <h2 className="step__title" id={id} ref={headingRef} tabIndex={headingRef ? -1 : undefined} style={{ fontSize: '1.1rem' }}>
-        <span className="step__num" aria-hidden="true">
-          {n}
-        </span>
+      <h2 className="step__title" id={id} ref={headingRef} tabIndex={headingRef ? -1 : undefined}>
         {title}
       </h2>
       {children}
@@ -215,17 +213,14 @@ export function TaskView({ caseStudy, task }: { caseStudy: CaseStudy; task: Revi
 
       {section && (
         <section className="stack" aria-labelledby={`${uid}-claim`} style={{ marginTop: 8 }}>
-          <h2 className="step__title" id={`${uid}-claim`} style={{ fontSize: '1.1rem', marginBottom: 0 }}>
-            <span className="step__num" aria-hidden="true">
-              A
-            </span>
+          <h2 className="step__title" id={`${uid}-claim`} style={{ marginBottom: 0 }}>
             Read the claim
           </h2>
           <ClaimExcerpt proposal={caseStudy.proposal} section={section} />
         </section>
       )}
 
-      <Step n="B" title="Inspect the evidence">
+      <Step title="Inspect the evidence">
         <p style={{ marginBottom: 4 }}>Check the claim against the case file. These sections are a good place to start:</p>
         <div className="evidence-links">
           {task.evidenceSections.map((id) => (
@@ -245,7 +240,7 @@ export function TaskView({ caseStudy, task }: { caseStudy: CaseStudy; task: Revi
         )}
       </Step>
 
-      <Step n="C" title={STAGE1.title}>
+      <Step title={`Step 1: ${STAGE1.title}`}>
         {!initial ? (
           <div className="stack">
             <JudgementChoice
@@ -304,7 +299,7 @@ export function TaskView({ caseStudy, task }: { caseStudy: CaseStudy; task: Revi
       </Step>
 
       {initial && (
-        <Step n="D" title={STAGE2.title} headingRef={stage2Ref}>
+        <Step title={`Step 2: ${STAGE2.title}`} headingRef={stage2Ref}>
           <div className="stack">
             {!submitted && <p style={{ margin: 0 }}>{STAGE2.intro}</p>}
             {t.revising && (
@@ -381,7 +376,7 @@ export function TaskView({ caseStudy, task }: { caseStudy: CaseStudy; task: Revi
             </p>
           )}
           {t.hintsShown < task.hints.length && (
-            <button type="button" className="btn btn--small" onClick={showHint} style={{ marginTop: 8 }}>
+            <button type="button" className="btn btn--quiet" onClick={showHint} style={{ marginTop: 8 }}>
               Show a hint ({t.hintsShown + 1} of {task.hints.length})
             </button>
           )}
@@ -389,9 +384,9 @@ export function TaskView({ caseStudy, task }: { caseStudy: CaseStudy; task: Revi
       )}
 
       {submitted && initial && (
-        <section className="card feedback stack" aria-labelledby={`${uid}-fb`}>
+        <section className="feedback stack" aria-labelledby={`${uid}-fb`}>
           <div>
-            <p className="eyebrow">Step E · Compare{t.attempts.length > 1 ? ` · attempt ${t.attempts.length}` : ''}</p>
+            {t.attempts.length > 1 && <p className="eyebrow">Revised review, attempt {t.attempts.length}</p>}
             <h2 id={`${uid}-fb`} ref={feedbackRef} tabIndex={-1}>
               Feedback
             </h2>
@@ -462,7 +457,7 @@ export function TaskView({ caseStudy, task }: { caseStudy: CaseStudy; task: Revi
           <FeedbackDetails feedback={task.feedback} schedule={caseStudy.schedule} />
 
           <div className="btn-row no-print" style={{ borderTop: '1px solid var(--border)', paddingTop: 16 }}>
-            <button type="button" className="btn" onClick={startRevision}>
+            <button type="button" className="btn btn--quiet" onClick={startRevision}>
               Revise my judgement or answers
             </button>
             {next ? (

@@ -20,8 +20,10 @@
   --diff: #9c3426;
   --diff-soft: #fbeae7;
   --focus: #1f4e9e;
-  --shadow: 0 1px 2px rgb(16 24 40 / 6%), 0 1px 3px rgb(16 24 40 / 8%);
-  --radius: 10px;
+  --shadow: none;
+  /* Light tint for the two 'documents': the proposal and the case file. */
+  --doc-bg: #eaeff6;
+  --radius: 2px;
   /* No web fonts: everything works offline. */
   --font: Aptos, 'Segoe UI', system-ui, -apple-system, Roboto, Arial, sans-serif;
   /* The proposal document only. */
@@ -52,6 +54,7 @@
     --diff-soft: #3a211d;
     --focus: #8db1f0;
     --shadow: none;
+    --doc-bg: #1d242e;
     color-scheme: dark;
   }
 }
@@ -98,7 +101,7 @@ a {
 :focus-visible {
   outline: 3px solid var(--focus);
   outline-offset: 2px;
-  border-radius: 4px;
+  border-radius: 2px;
 }
 
 /* Headings and regions focused by script (for screen readers) need no ring. */
@@ -124,7 +127,7 @@ a {
   top: -48px;
   background: var(--surface);
   padding: 8px 12px;
-  border-radius: 6px;
+  border-radius: 2px;
   z-index: 10;
 }
 .skip-link:focus { top: 8px; }
@@ -164,7 +167,7 @@ a {
 }
 .brand__title { font-weight: 700; font-size: 1.1rem; letter-spacing: -0.01em; }
 .brand__subtitle { font-size: 0.85rem; color: var(--muted); }
-.header-links { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+.header-links { display: flex; gap: 8px 20px; align-items: center; flex-wrap: wrap; }
 
 /* --- Buttons and controls ---------------------------------------------------- */
 
@@ -175,7 +178,7 @@ a {
   gap: 6px;
   min-height: 40px;
   padding: 8px 16px;
-  border-radius: 8px;
+  border-radius: 0;
   border: 1px solid var(--border-strong);
   background: var(--surface);
   color: var(--text);
@@ -202,10 +205,22 @@ a {
   padding-left: 8px;
   padding-right: 8px;
 }
-.btn--quiet:hover { background: var(--accent-soft); }
 .btn--small { min-height: 32px; padding: 4px 10px; font-size: 0.88rem; }
 .btn[disabled] { opacity: 0.55; cursor: not-allowed; }
 .btn-row { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+/* Secondary actions read as plain underlined links (GOV.UK style). */
+.btn--quiet,
+.btn--quiet.btn--small {
+  border: 0;
+  background: none;
+  padding: 0;
+  min-height: 24px;
+  color: var(--accent);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.btn--quiet:hover { background: none; text-decoration-thickness: 2px; }
 
 fieldset {
   border: 0;
@@ -226,7 +241,7 @@ legend {
   align-items: flex-start;
   padding: 10px 12px;
   border: 1px solid var(--border);
-  border-radius: 8px;
+  border-radius: 2px;
   background: var(--surface);
   cursor: pointer;
 }
@@ -251,7 +266,7 @@ input[type='text'] {
   color: var(--text);
   background: var(--surface);
   border: 1px solid var(--border-strong);
-  border-radius: 8px;
+  border-radius: 0;
   padding: 8px 10px;
   width: 100%;
 }
@@ -278,7 +293,6 @@ textarea[readonly] { background: var(--surface-2); }
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--radius);
-  box-shadow: var(--shadow);
   padding: 20px 22px;
 }
 .card + .card { margin-top: 16px; }
@@ -333,49 +347,56 @@ textarea[readonly] { background: var(--surface-2); }
   margin: 0;
   display: flex;
   flex-wrap: wrap;
-  gap: 6px;
+  gap: 2px 20px;
+  border-bottom: 1px solid var(--border);
 }
 .progress-nav li { margin: 0; }
 .progress-nav a {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  min-height: 36px;
-  padding: 4px 12px;
-  border-radius: 999px;
-  border: 1px solid var(--border);
-  background: var(--surface);
-  color: var(--text);
-  text-decoration: none;
-  font-size: 0.9rem;
-  font-weight: 600;
+  display: inline-block;
+  padding: 8px 0 5px;
+  border-bottom: 3px solid transparent;
+  color: var(--accent);
+  text-underline-offset: 3px;
 }
-.progress-nav a:hover { border-color: var(--border-strong); }
 .progress-nav a[aria-current='page'] {
-  border-color: var(--accent);
-  background: var(--accent-soft);
-  color: var(--accent-strong);
+  color: var(--text);
+  font-weight: 700;
+  text-decoration: none;
+  border-bottom-color: var(--accent);
 }
-.status-dot {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  border: 2px solid var(--border-strong);
-  flex: none;
+.nav-done { color: var(--ok); margin-left: 6px; text-decoration: none; display: inline-block; }
+.progress-pager { display: none; }
+
+/* Wide screens: GOV.UK-style side navigation in a narrow left column. */
+@media (min-width: 1280px) {
+  .page--case { max-width: calc(var(--page-max) + 228px); }
+  .case-shell { display: grid; grid-template-columns: 200px minmax(0, 1fr); gap: 28px; align-items: start; }
+  .progress-nav { position: sticky; top: 16px; margin: 0; }
+  .progress-nav ol { flex-direction: column; flex-wrap: nowrap; gap: 0; border-bottom: 0; }
+  .progress-nav a { display: block; padding: 6px 0 6px 12px; border-bottom: 0; border-left: 4px solid transparent; }
+  .progress-nav a[aria-current='page'] { border-left-color: var(--accent); }
 }
-.status-dot--in-progress { border-color: var(--accent); background: linear-gradient(90deg, var(--accent) 50%, transparent 50%); }
-.status-dot--reviewed { border-color: var(--accent); background: var(--accent); }
-.progress-nav__label { display: inline; }
+
+/* Phones: "Claim 3 of 6" with Previous / Next instead of the full list. */
 @media (max-width: 700px) {
-  .progress-nav__label--long { display: none; }
+  .progress-nav ol { display: none; }
+  .progress-pager {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 12px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+  }
+  .progress-pager__where { font-weight: 700; margin: 0; }
 }
 
 /* --- Case file ------------------------------------------------------------------ */
 
-.case-file { padding: 0; overflow: hidden; }
+.case-file { padding: 0; overflow: hidden; background: var(--doc-bg); border: 0; border-radius: 0; }
 .case-file__head { padding: 16px 18px 10px; border-bottom: 1px solid var(--border); }
 .case-file__head h2 { margin-bottom: 0.2em; }
-.case-file details { border-bottom: 1px solid var(--border); }
+.case-file details { border-bottom: 1px solid var(--border); border-left: 4px solid transparent; }
 .case-file details:last-child { border-bottom: 0; }
 .case-file summary {
   cursor: pointer;
@@ -383,7 +404,7 @@ textarea[readonly] { background: var(--surface-2); }
   font-weight: 650;
   list-style-position: inside;
 }
-.case-file summary:hover { background: var(--surface-2); }
+.case-file summary:hover { text-decoration: underline; }
 .case-file__body { padding: 0 18px 14px; }
 .case-file .data { font-size: 1rem; }
 /* Keep a scrolled-to section clear of the page edge and, on phones, of the sticky Task/Case file toggle. */
@@ -391,13 +412,13 @@ textarea[readonly] { background: var(--surface-2); }
 @media (max-width: 1000px) { .case-file details { scroll-margin-top: 72px; } }
 .briefing .disclaimer { margin: 4px 0 0; }
 @keyframes case-flash {
-  0%, 35% { background: var(--accent-soft); box-shadow: inset 4px 0 0 var(--accent); }
-  100% { background: transparent; box-shadow: inset 4px 0 0 transparent; }
+  0%, 35% { background: var(--accent-soft); border-left-color: var(--accent); }
+  100% { background: transparent; border-left-color: transparent; }
 }
 .case-file details.is-flashing { animation: case-flash 1.6s ease-out; }
 @media (prefers-reduced-motion: reduce) {
   /* No animation: a steady highlight that is removed after a moment. */
-  .case-file details.is-flashing { animation: none; background: var(--accent-soft); box-shadow: inset 4px 0 0 var(--accent); }
+  .case-file details.is-flashing { animation: none; background: var(--accent-soft); border-left-color: var(--accent); }
 }
 .fact-list { list-style: none; padding: 0; margin: 0; display: grid; gap: 8px; }
 .fact-list li { margin: 0; }
@@ -451,10 +472,9 @@ table.data tr.is-critical td:first-child { font-weight: 700; }
 
 .proposal {
   font-family: var(--font-doc);
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  box-shadow: var(--shadow);
+  background: var(--doc-bg);
+  border: 0;
+  border-radius: 0;
   padding: 0;
   overflow: hidden;
 }
@@ -466,8 +486,7 @@ table.data tr.is-critical td:first-child { font-weight: 700; }
   flex-wrap: wrap;
   align-items: baseline;
   padding: 10px 22px;
-  background: var(--surface-2);
-  border-bottom: 1px solid var(--border);
+  border-bottom: 1px solid var(--border-strong);
   font-size: 0.85rem;
 }
 .proposal__label strong { letter-spacing: 0.02em; }
@@ -488,19 +507,7 @@ mark.claim {
 
 .task-head { margin-bottom: 16px; }
 .step { position: relative; }
-.step__title { display: flex; gap: 10px; align-items: baseline; }
-.step__num {
-  display: inline-grid;
-  place-items: center;
-  width: 26px;
-  height: 26px;
-  border-radius: 50%;
-  background: var(--accent-soft);
-  color: var(--accent-strong);
-  font-weight: 700;
-  font-size: 0.85rem;
-  flex: none;
-}
+.step__title { font-size: 1rem; font-weight: 700; margin-bottom: 0.6em; }
 .evidence-links { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; }
 .part + .part { margin-top: 22px; padding-top: 18px; border-top: 1px dashed var(--border); }
 
@@ -509,7 +516,7 @@ mark.claim {
   min-height: 44px;
   padding: 8px 12px;
   border: 1px dashed var(--border-strong);
-  border-radius: 8px;
+  border-radius: 2px;
   font-family: var(--font);
   font-size: 1.05rem;
   letter-spacing: 0.02em;
@@ -522,10 +529,8 @@ mark.claim {
 .classify-item legend { font-weight: 500; margin-bottom: 6px; }
 
 .hint-box {
-  background: var(--surface-2);
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  padding: 12px 14px;
+  border-top: 1px solid var(--border);
+  padding-top: 16px;
 }
 .hint-box ol { margin: 6px 0 0; }
 
@@ -533,7 +538,7 @@ mark.claim {
   border: 1px solid var(--border-strong);
   border-left: 4px solid var(--accent);
   background: var(--surface);
-  border-radius: 8px;
+  border-radius: 2px;
   padding: 12px 14px;
 }
 .notice--warn { border-left-color: var(--partly); }
@@ -543,17 +548,15 @@ mark.claim {
 
 .fit {
   display: inline-flex;
-  align-items: center;
+  align-items: baseline;
   gap: 6px;
   font-weight: 650;
   font-size: 0.9rem;
-  padding: 2px 8px;
-  border-radius: 6px;
 }
 .fit__symbol { font-size: 0.95em; }
-.fit--expected, .fit--acceptable { color: var(--ok); background: var(--ok-soft); }
-.fit--partly { color: var(--partly); background: var(--partly-soft); }
-.fit--differs { color: var(--diff); background: var(--diff-soft); }
+.fit--expected, .fit--acceptable { color: var(--ok); }
+.fit--partly { color: var(--partly); }
+.fit--differs { color: var(--diff); }
 
 .result-row { display: grid; gap: 4px; padding: 8px 0; border-bottom: 1px solid var(--border); }
 .result-row:last-child { border-bottom: 0; }
@@ -570,12 +573,12 @@ mark.claim {
   letter-spacing: 0.03em;
   text-transform: uppercase;
   padding: 2px 8px;
-  border-radius: 4px;
+  border-radius: 2px;
   border: 1px solid var(--border-strong);
   color: var(--muted);
 }
 
-.feedback { border-top: 4px solid var(--accent); }
+.feedback { border-left: 4px solid var(--accent); padding: 4px 0 4px 20px; }
 .feedback-block + .feedback-block { margin-top: 16px; }
 .feedback-block h4 { margin-bottom: 0.3em; }
 .better-proposal {
@@ -595,7 +598,7 @@ details.more[open] > summary { margin-bottom: 8px; }
 .answer-box {
   background: var(--surface-2);
   border: 1px solid var(--border);
-  border-radius: 8px;
+  border-radius: 2px;
   padding: 10px 12px;
   white-space: pre-wrap;
   font-size: 0.95rem;
@@ -610,21 +613,12 @@ details.more[open] > summary { margin-bottom: 8px; }
 .hero { padding: 28px 0 12px; }
 .hero h1 { font-size: clamp(1.9rem, 4vw, 2.6rem); letter-spacing: -0.02em; }
 .hero__lead { font-size: 1.15rem; max-width: 46em; }
-.steps { counter-reset: step; list-style: none; padding: 0; display: grid; gap: 10px; }
-.steps li { counter-increment: step; display: flex; gap: 12px; align-items: baseline; margin: 0; }
-.steps li::before {
-  content: counter(step);
-  display: inline-grid;
-  place-items: center;
-  width: 26px;
-  height: 26px;
-  border-radius: 50%;
-  background: var(--accent-soft);
-  color: var(--accent-strong);
-  font-weight: 700;
-  font-size: 0.85rem;
-  flex: none;
-}
+.steps { padding-left: 1.4em; display: grid; gap: 6px; }
+.steps li { margin: 0; }
+
+/* A heading and text separated by a thin rule, instead of a box. */
+.rule-section { border-top: 1px solid var(--border); padding-top: 16px; }
+.rule-section + .rule-section { margin-top: 24px; }
 
 .summary-table td, .summary-table th { white-space: normal; }
 /* Text typed by students (or long words) must wrap anywhere, never widen the page. */

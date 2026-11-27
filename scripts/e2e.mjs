@@ -79,12 +79,12 @@ try {
       const fs = (sel) => parseFloat(getComputedStyle(document.querySelector(sel)).fontSize);
       return {
         share: aside / (main + aside),
-        page: document.querySelector('.page').getBoundingClientRect().width,
+        page: document.querySelector('.case-shell__content').getBoundingClientRect().width,
         same: fs('.fact-list li') === fs('body') && fs('.case-file .data') === fs('body'),
       };
     });
     check(m.share > 0.35 && m.share < 0.45, `${width}px: case panel takes ${(m.share * 100).toFixed(0)}% of the workspace`);
-    check(m.page <= 1400, `${width}px: page width ${m.page.toFixed(0)}px (max 1400)`);
+    check(m.page <= 1400, `${width}px: content width ${m.page.toFixed(0)}px beside the navigation (max 1400)`);
     check(m.same, `${width}px: case panel text is the same size as the main text`);
     if (shots) await page.screenshot({ path: join(shots, `claim-3-${width}.png`), fullPage: false });
   }
@@ -98,7 +98,17 @@ try {
       document.getElementById('case-stakeholders').open = false;
     });
     await page.evaluate(() => [...document.querySelectorAll('.evidence-links button')].find((b) => b.textContent === 'Stakeholders').click());
-    await new Promise((res) => setTimeout(res, 700));
+    // Smooth scrolling takes a variable time: wait (up to 2.5 s) until the section has arrived.
+    await page
+      .waitForFunction(
+        () => {
+          const top = document.getElementById('case-stakeholders').getBoundingClientRect().top;
+          const below = document.querySelector('.pane-toggle')?.getBoundingClientRect().bottom ?? 0;
+          return top >= below - 1 && top < window.innerHeight;
+        },
+        { timeout: 2500 },
+      )
+      .catch(() => {});
     const st = await page.evaluate(() => {
       const d = document.getElementById('case-stakeholders');
       const rect = d.getBoundingClientRect();
@@ -112,7 +122,10 @@ try {
     });
     check(st.open && st.flashing && st.inView && st.panelShown, `${width}px: evidence button opens, shows and highlights the section ${JSON.stringify(st)}`);
     if (shots && width === 390) await page.screenshot({ path: join(shots, 'phone-case-file-tab.png'), fullPage: false });
-    await new Promise((res) => setTimeout(res, 1500));
+    // The highlight lasts about 1.6 s; wait up to 3 s for it to go.
+    await page
+      .waitForFunction(() => !document.getElementById('case-stakeholders').classList.contains('is-flashing'), { timeout: 3000 })
+      .catch(() => {});
     const still = await page.evaluate(() => document.getElementById('case-stakeholders').classList.contains('is-flashing'));
     check(!still, `${width}px: the highlight is removed again`);
   }
@@ -193,7 +206,15 @@ try {
     const name = svg.querySelector('.net-name');
     return parseFloat(getComputedStyle(name).fontSize) * svg.getScreenCTM().a;
   });
-  check(labelPx >= 15, `diagram node labels render at ${labelPx.toFixed(1)}px in Task 4`);
+  // At 1366px the left navigation column narrows the task column, so labels are smaller.
+  check(labelPx >= 12, `diagram node labels render at ${labelPx.toFixed(1)}px in Task 4 at 1366px (min 12)`);
+  await page.setViewport({ width: 1920, height: 900 });
+  const labelPxWide = await page.evaluate(() => {
+    const svg = document.querySelector('.workspace__main .network svg');
+    return parseFloat(getComputedStyle(svg.querySelector('.net-name')).fontSize) * svg.getScreenCTM().a;
+  });
+  check(labelPxWide >= 15, `diagram node labels render at ${labelPxWide.toFixed(1)}px in Task 4 at 1920px (min 15)`);
+  await page.setViewport({ width: 1366, height: 900 });
   check(/self-assessed: not checked automatically/i.test(fb), 'written answer is labelled as self-assessed');
   if (shots) {
     await page.evaluate(() => document.querySelectorAll('details.more').forEach((d) => (d.open = true)));

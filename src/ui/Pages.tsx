@@ -26,7 +26,7 @@ export function HomePage() {
           const started = c.tasks.some((t) => taskStatus(taskOf(p, c.id, t.id)) !== 'not-started') ||
             Object.keys(caseOf(p, c.id).transfer).length > 0;
           return (
-            <section key={c.id} className="card" aria-labelledby={`case-${c.id}-title`}>
+            <section key={c.id} className="rule-section" aria-labelledby={`case-${c.id}-title`}>
               <h2 id={`case-${c.id}-title`}>{c.title}</h2>
               <p>{c.summary}</p>
               <p className="disclaimer" style={{ marginBottom: 14 }}>

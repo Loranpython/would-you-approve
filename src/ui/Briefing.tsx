@@ -22,7 +22,7 @@ export function Briefing({ caseStudy }: { caseStudy: CaseStudy }) {
 
       <div className="briefing__grid">
         {sections.map((s) => (
-          <section key={s.id} className="card" aria-labelledby={`brief-${s.id}`}>
+          <section key={s.id} className="rule-section" aria-labelledby={`brief-${s.id}`}>
             <h2 id={`brief-${s.id}`}>{s.title}</h2>
             {s.facts.some((f) => f.label) ? (
               <dl className="fact-dl">
@@ -45,7 +45,7 @@ export function Briefing({ caseStudy }: { caseStudy: CaseStudy }) {
       </div>
 
       {schedule && (
-        <section className="card stack" aria-labelledby="brief-schedule">
+        <section className="rule-section stack" aria-labelledby="brief-schedule">
           <h2 id="brief-schedule">{schedule.title}</h2>
           <NetworkDiagram
             result={scenarioResult(schedule, schedule.baseline)}

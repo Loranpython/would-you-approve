@@ -50,7 +50,7 @@ export function SummaryView({ caseStudy }: { caseStudy: CaseStudy }) {
         </div>
       </div>
 
-      <section className="card" aria-labelledby="sum-review">
+      <section className="rule-section" aria-labelledby="sum-review">
         <h2 id="sum-review">Review summary</h2>
         {submittedTasks.length < s.tasks.length && (
           <p className="small muted">
@@ -131,7 +131,7 @@ export function SummaryView({ caseStudy }: { caseStudy: CaseStudy }) {
         </p>
       </section>
 
-      <section className="card stack" aria-labelledby="sum-practice">
+      <section className="rule-section stack" aria-labelledby="sum-practice">
         <div>
           <h2 id="sum-practice">Practice results</h2>
           <span className="label-tag">{AUTO_CHECK_LABEL}</span>
@@ -166,7 +166,7 @@ export function SummaryView({ caseStudy }: { caseStudy: CaseStudy }) {
           ))}
       </section>
 
-      <section className="card stack" aria-labelledby="sum-texts">
+      <section className="rule-section stack" aria-labelledby="sum-texts">
         <div>
           <h2 id="sum-texts">Your explanations</h2>
           <span className="label-tag">{SELF_CHECK_LABEL}</span>
@@ -189,7 +189,7 @@ export function SummaryView({ caseStudy }: { caseStudy: CaseStudy }) {
         {submittedTasks.length === 0 && <p className="muted">No explanations submitted yet.</p>}
       </section>
 
-      <section className="card stack" aria-labelledby="sum-transfer">
+      <section className="rule-section stack" aria-labelledby="sum-transfer">
         <div>
           <h2 id="sum-transfer">Independent challenge</h2>
           <p className="small muted">Completed without hints. Reported separately from the guided review.</p>
@@ -238,7 +238,7 @@ export function SummaryView({ caseStudy }: { caseStudy: CaseStudy }) {
         ))}
       </section>
 
-      <section className="card" aria-labelledby="sum-reflect">
+      <section className="rule-section" aria-labelledby="sum-reflect">
         <h2 id="sum-reflect">Reflection</h2>
         <div className="field">
           <label className="field__label" htmlFor={reflectionId}>

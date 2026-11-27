@@ -5,12 +5,6 @@ import { href, type Route } from '../state/router';
 import { CaseFile, caseFileSections } from './CaseFile';
 import { CaseFileContext, ScheduleContext, useProgressState } from './common';
 
-const STATUS_TEXT: Record<TaskStatus, string> = {
-  'not-started': 'not started',
-  'in-progress': 'in progress',
-  reviewed: 'reviewed',
-};
-
 export function challengeStatus(p: Progress, c: CaseStudy): TaskStatus {
   const parts = c.transfer.parts.map((part) => caseOf(p, c.id).transfer[part.id]);
   if (parts.every((t) => t?.submitted)) return 'reviewed';
@@ -18,12 +12,54 @@ export function challengeStatus(p: Progress, c: CaseStudy): TaskStatus {
   return 'not-started';
 }
 
+interface NavItem {
+  key: string;
+  label: string;
+  href: string;
+  current: boolean;
+  done: boolean;
+  /** Extra text for screen readers, e.g. the claim title. */
+  detail?: string;
+}
+
+function navItems(caseStudy: CaseStudy, route: Route, p: Progress): NavItem[] {
+  const id = caseStudy.id;
+  return [
+    { key: 'briefing', label: 'Briefing', href: href.briefing(id), current: route.name === 'briefing', done: false },
+    { key: 'case', label: 'Proposal', href: href.case(id), current: route.name === 'case', done: false },
+    ...caseStudy.tasks.map((t) => ({
+      key: t.id,
+      label: `Claim ${t.number}`,
+      href: href.task(id, t.id),
+      current: route.name === 'task' && route.taskId === t.id,
+      done: taskStatus(taskOf(p, id, t.id)) === 'reviewed',
+      detail: t.title,
+    })),
+    {
+      key: 'challenge',
+      label: 'Challenge',
+      href: href.challenge(id),
+      current: route.name === 'challenge',
+      done: challengeStatus(p, caseStudy) === 'reviewed',
+    },
+    { key: 'summary', label: 'Summary', href: href.summary(id), current: route.name === 'summary', done: false },
+  ];
+}
+
+/**
+ * One list of plain text links, styled by screen width: a left column from
+ * 1280px (GOV.UK side navigation), a row of links above the content below
+ * that, and on phones a short "Claim 3 of 6" line with Previous / Next.
+ */
 function ProgressNav({ caseStudy, route }: { caseStudy: CaseStudy; route: Route }) {
   const p = useProgressState();
-  const current = (name: string, taskId?: string) =>
-    route.name === name && (!taskId || (route.name === 'task' && route.taskId === taskId)) ? 'page' : undefined;
+  const items = navItems(caseStudy, route, p);
   const reviewed = caseStudy.tasks.filter((t) => taskStatus(taskOf(p, caseStudy.id, t.id)) === 'reviewed').length;
-  const challenge = challengeStatus(p, caseStudy);
+  const index = items.findIndex((i) => i.current);
+  const prev = index > 0 ? items[index - 1] : undefined;
+  const next = index >= 0 && index < items.length - 1 ? items[index + 1] : undefined;
+  const task = route.name === 'task' ? caseStudy.tasks.find((t) => t.id === route.taskId) : undefined;
+  const where = task ? `Claim ${task.number} of ${caseStudy.tasks.length}` : items[index]?.label;
 
   return (
     <nav className="progress-nav" aria-label="Review progress">
@@ -31,43 +67,26 @@ function ProgressNav({ caseStudy, route }: { caseStudy: CaseStudy; route: Route 
         {reviewed} of {caseStudy.tasks.length} claims reviewed.
       </p>
       <ol>
-        <li>
-          <a href={href.briefing(caseStudy.id)} aria-current={current('briefing')}>
-            Briefing
-          </a>
-        </li>
-        <li>
-          <a href={href.case(caseStudy.id)} aria-current={current('case')}>
-            Proposal
-          </a>
-        </li>
-        {caseStudy.tasks.map((t) => {
-          const status = taskStatus(taskOf(p, caseStudy.id, t.id));
-          return (
-            <li key={t.id}>
-              <a href={href.task(caseStudy.id, t.id)} aria-current={current('task', t.id)} title={t.title}>
-                <span className={`status-dot status-dot--${status}`} aria-hidden="true" />
-                Claim {t.number}
-                <span className="sr-only">
-                  : {t.title}, {STATUS_TEXT[status]}
+        {items.map((i) => (
+          <li key={i.key}>
+            <a href={i.href} aria-current={i.current ? 'page' : undefined} title={i.detail}>
+              {i.label}
+              {i.detail && <span className="sr-only">: {i.detail}</span>}
+              {i.done && (
+                <span className="nav-done">
+                  <span aria-hidden="true">✓</span>
+                  <span className="sr-only"> done</span>
                 </span>
-              </a>
-            </li>
-          );
-        })}
-        <li>
-          <a href={href.challenge(caseStudy.id)} aria-current={current('challenge')}>
-            <span className={`status-dot status-dot--${challenge}`} aria-hidden="true" />
-            Challenge
-            <span className="sr-only">, {STATUS_TEXT[challenge]}</span>
-          </a>
-        </li>
-        <li>
-          <a href={href.summary(caseStudy.id)} aria-current={current('summary')}>
-            Summary
-          </a>
-        </li>
+              )}
+            </a>
+          </li>
+        ))}
       </ol>
+      <div className="progress-pager">
+        {prev ? <a href={prev.href} aria-label={`Previous: ${prev.label}`}>Previous</a> : <span />}
+        <p className="progress-pager__where">{where}</p>
+        {next ? <a href={next.href} aria-label={`Next: ${next.label}`}>Next</a> : <span />}
+      </div>
     </nav>
   );
 }
@@ -127,28 +146,32 @@ export function CaseLayout({ caseStudy, route, children }: { caseStudy: CaseStud
   return (
     <ScheduleContext.Provider value={caseStudy.schedule}>
       <CaseFileContext.Provider value={ctx}>
-        <div className="page">
-          <ProgressNav caseStudy={caseStudy} route={route} />
-          {wide ? (
-            <main id="main">{children}</main>
-          ) : (
-            <div className="workspace" data-pane={pane}>
-              <div className="pane-toggle" role="group" aria-label="Show">
-                <button type="button" className="btn" aria-pressed={pane === 'task'} onClick={() => setPane('task')}>
-                  {route.name === 'case' ? 'Proposal' : 'Task'}
-                </button>
-                <button type="button" className="btn" aria-pressed={pane === 'case'} onClick={() => setPane('case')}>
-                  Case file
-                </button>
-              </div>
-              <main id="main" className="workspace__main">
-                {children}
-              </main>
-              <aside ref={asideRef} className="workspace__aside" aria-label="Case file">
-                <CaseFile caseStudy={caseStudy} openSections={openSections} pointed={pointed} />
-              </aside>
+        <div className="page page--case">
+          <div className="case-shell">
+            <ProgressNav caseStudy={caseStudy} route={route} />
+            <div className="case-shell__content">
+              {wide ? (
+                <main id="main">{children}</main>
+              ) : (
+                <div className="workspace" data-pane={pane}>
+                  <div className="pane-toggle" role="group" aria-label="Show">
+                    <button type="button" className="btn" aria-pressed={pane === 'task'} onClick={() => setPane('task')}>
+                      {route.name === 'case' ? 'Proposal' : 'Task'}
+                    </button>
+                    <button type="button" className="btn" aria-pressed={pane === 'case'} onClick={() => setPane('case')}>
+                      Case file
+                    </button>
+                  </div>
+                  <main id="main" className="workspace__main">
+                    {children}
+                  </main>
+                  <aside ref={asideRef} className="workspace__aside" aria-label="Case file">
+                    <CaseFile caseStudy={caseStudy} openSections={openSections} pointed={pointed} />
+                  </aside>
+                </div>
+              )}
             </div>
-          )}
+          </div>
         </div>
       </CaseFileContext.Provider>
     </ScheduleContext.Provider>
