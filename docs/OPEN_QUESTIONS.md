@@ -94,7 +94,7 @@ Other changes:
 - The case panel takes about 40% of a 1400px layout, scrolls with the page instead of having its own scrollbar, and opens only the sections linked to each task.
 - The network diagram is shown full width in the briefing, Task 4 and the challenge, and no longer in the panel.
 - The full fictional-case disclaimer appears once per page; the start page has a short line instead.
-- The proposal label now reads: "Simulated proposal with deliberately chosen strengths and errors. Drafted with AI assistance and reviewed by the project group." README and REPORT_DRAFTS were corrected to match.
+- The proposal label was corrected; it now reads: "Simulated proposal with deliberately chosen strengths and errors, prepared by the project group."
 - Interface font: Aptos with system fallbacks. Georgia is used only for the proposal.
 
 **IT stakeholders and activity B (group review, content version 1.3.0).**
@@ -136,6 +136,13 @@ Other changes:
 - **Doubled full stop:** "Model answer" lines and other joined feedback no longer add a full stop after text that already ends a sentence. Tests check every task and the challenge, with all answers deliberately wrong, plus all content text.
 - **Minimum length for written answers:** the five-word rule now also applies to the Stage 2 written questions (Task 2 criterion, Task 3 practical action, Task 5 rewrite) and to the challenge. The same message appears under each field. "What changed your judgement?" stays optional.
 - **Why no version change:** no ids, questions or correct answers changed, so saved answers are still applied correctly.
+
+**Wording and credits (group review, no content version change).**
+
+- **Teacher note:** now says the activity "sends no data anywhere; a single-file version also works offline".
+- **Task 5:** the scope-reduction option now says "IT operations staff".
+- **Task 6:** the better proposal now says "one semester after launch", matching Task 2 and the challenge.
+- **Credits:** the site and README no longer mention how the site was built. The credit line reads "Developed by Group 35 for TPK5100 Applied Project Management." The group will add its own note on the About page later.
 
 **Second case.** The content model and navigation support more cases. Each case is a folder such as `src/content/coursehub/` that exports one `CaseStudy` and is listed in `src/content/cases.ts`. Links take the form `#/case/<id>/…`, and saved progress is stored per case. Only CourseHub is built.
 

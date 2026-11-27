@@ -4,11 +4,11 @@
 
 An educational prototype for TPK5100 Applied Project Management at NTNU. Students read a short briefing on a fictional project case (CourseHub, a pilot learning platform). They then review a simulated AI-generated proposal. For each claim they first record an initial judgement with their own reasoning, then check the details and compare their review with structured feedback. A short independent challenge without hints follows. The activity takes about 10–15 minutes.
 
-The proposal is a simulation with deliberately chosen strengths and errors. It was drafted with AI assistance and reviewed by the project group.
+The proposal is a simulation with deliberately chosen strengths and errors, prepared by the project group.
 
 The prototype is derived from the findings and recommendations of our group's interview study (final report, Sections 5.1 and 5.3). It was developed after the study and is not part of it. Its educational effect has not been tested.
 
-**Developed by Group 35 for TPK5100 Applied Project Management. Content designed and reviewed by the group; code written with AI assistance (Claude Code).**
+**Developed by Group 35 for TPK5100 Applied Project Management.**
 
 This is a student prototype, not an official NTNU resource. Its model answers are not official course answers.
 

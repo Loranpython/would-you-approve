@@ -213,7 +213,7 @@ describe('site-wide wording', () => {
   it('labels the proposal accurately, here and in the README and report drafts', () => {
     for (const c of CASES) {
       expect(c.proposal.note).toBe(
-        'Simulated proposal with deliberately chosen strengths and errors. Drafted with AI assistance and reviewed by the project group.',
+        'Simulated proposal with deliberately chosen strengths and errors, prepared by the project group.',
       );
     }
     // REPORT_DRAFTS.md is kept locally only (not in the repository), so check it when present.
@@ -224,9 +224,16 @@ describe('site-wide wording', () => {
     for (const t of [text, docs]) expect(t).not.toMatch(/not (the )?output (from|of) (a|any) real AI|written by the project group/i);
   });
 
+  it('does not say how the site was built (the group will add its own note later)', () => {
+    const readme = readFileSync('README.md', 'utf8');
+    for (const t of [text, readme]) {
+      expect(t).not.toMatch(/claude|with AI assistance|drafted with AI|written with AI|AI-assisted|code written/i);
+    }
+  });
+
   it('includes the agreed credit lines', () => {
     expect(about.CREDIT).toBe(
-      'Developed by Group 35 for TPK5100 Applied Project Management. Content designed and reviewed by the group; code written with AI assistance (Claude Code).',
+      'Developed by Group 35 for TPK5100 Applied Project Management.',
     );
     expect(text).toContain("Case inspired by the lecturer's illustration example (handouts PDF p. 47, slides 109–110).");
   });

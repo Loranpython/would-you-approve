@@ -37,7 +37,7 @@ export const RESEARCH = {
 export const TEACHERS = {
   title: 'For teachers',
   paragraphs: [
-    'In a 15-minute seminar slot, students could work in pairs on two or three tasks (for example Tasks 3, 4 and 6) for about eight minutes, then complete Part A of the independent challenge on their own. Use the remaining time for a short plenary discussion. The activity runs in the browser, works offline and sends no data anywhere.',
+    'In a 15-minute seminar slot, students could work in pairs on two or three tasks (for example Tasks 3, 4 and 6) for about eight minutes, then complete Part A of the independent challenge on their own. Use the remaining time for a short plenary discussion. The activity runs in the browser and sends no data anywhere; a single-file version also works offline.',
   ],
   questions: [
     'Which claim sounded most convincing at first, and what in the case changed your view?',
@@ -46,7 +46,7 @@ export const TEACHERS = {
 };
 
 export const CREDIT =
-  'Developed by Group 35 for TPK5100 Applied Project Management. Content designed and reviewed by the group; code written with AI assistance (Claude Code).';
+  'Developed by Group 35 for TPK5100 Applied Project Management.';
 
 export const NOT_ENDORSED =
   'A student prototype. It is not an official NTNU resource, and its model answers are not official course answers.';

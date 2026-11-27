@@ -688,7 +688,7 @@ export const TASKS: ReviewTask[] = [
           },
           {
             id: 'resp-pm-scope',
-            text: 'If IT staff are unavailable, let the project manager reduce the pilot scope without approval.',
+            text: 'If IT operations staff are unavailable, let the project manager reduce the pilot scope without approval.',
             fit: 'differs',
             feedback: 'Reducing scope can be a valid fallback, but the faculty sponsor approves major scope changes.',
           },
@@ -852,7 +852,7 @@ export const TASKS: ReviewTask[] = [
         'The lecturer argues that the life-cycle view should extend beyond delivery into operation and use, and that the timing of a success assessment can change the conclusion. Evaluating a pilot before deciding on rollout applies both ideas.',
       conceptSources: ['lifecycle-beyond-delivery', 'success-objectives'],
       betterProposal:
-        'The claim can stand. A stronger version would add what will be evaluated and when: “Before any institution-wide rollout, evaluate pilot use and benefits (for example active use, staff maintenance workload and repetitive questions) at an agreed point after launch, and ask the faculty sponsor to approve any additional scope.”',
+        'The claim can stand. A stronger version would add what will be evaluated and when: “Before any institution-wide rollout, evaluate pilot use and benefits (for example active use, staff maintenance workload and repetitive questions) one semester after launch, and ask the faculty sponsor to approve any additional scope.”',
       more: [
         'This is the activity’s example of useful AI assistance. The suggestion is consistent with the case and the course concepts, and you can explain why it holds. Accepting it after checking is good judgement; rejecting it just because an AI wrote it would not be.',
       ],

@@ -1,12 +1,12 @@
 import type { Proposal } from '../types';
 
 // The simulated AI-generated proposal: teaching content with deliberately
-// chosen strengths and errors. Drafted with AI assistance and reviewed by the
-// project group. Some claims are sound, some need revision.
+// chosen strengths and errors, prepared by the project group. Some claims are
+// sound, some need revision.
 
 export const PROPOSAL: Proposal = {
   label: 'Simulated AI-generated proposal',
-  note: 'Simulated proposal with deliberately chosen strengths and errors. Drafted with AI assistance and reviewed by the project group.',
+  note: 'Simulated proposal with deliberately chosen strengths and errors, prepared by the project group.',
   title: 'Project proposal: CourseHub pilot',
   intro:
     'CourseHub will bring course information for one department together in one place, so that students and staff no longer need to search several systems. This proposal sets out the expected results, how success will be judged, stakeholder engagement, the schedule, resources and readiness, and next steps.',
